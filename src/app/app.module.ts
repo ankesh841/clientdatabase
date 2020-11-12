@@ -33,15 +33,22 @@ import {MatIconModule} from '@angular/material/icon';
 
 import {CommonModule} from'@angular/common';
 
+import * as firebase from 'firebase';
 
-// import { AngularFireModule } from 'angularfire2';
-// import { AngularFireDatabaseModule } from 'angularfire2/database';
 
-// import { AngularFireModule } from '@angular/fire';
-// import { AngularFireDatabaseModule } from '@angular/fire/database';
+// firebase.initializeApp(environment.firebase);
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { LoginComponent } from './login/login.component';
+import {MatCardModule} from '@angular/material/card';
+
+
+firebase.default.initializeApp(environment.firebase)
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     // AngularFireModule,
@@ -49,7 +56,8 @@ import {CommonModule} from'@angular/common';
     MatInputModule,
     CommonModule,
     MatButtonModule,
-
+AngularFireModule.initializeApp(environment.firebase),
+MatCardModule,
 
        BrowserModule,
     AppRoutingModule,MatSelectModule,

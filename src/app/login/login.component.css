@@ -1,0 +1,13 @@
+.btn-google {
+  color: white;
+  background-color: #f44336;
+}
+
+.background {
+  background-image: url("../../assets/background.png");
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}

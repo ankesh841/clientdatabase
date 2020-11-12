@@ -1,0 +1,25 @@
+<div class="background" style="margin-top: 40px" *ngIf="!login">
+  <div style="margin-top: 10%">
+    <mat-card class="mx-auto mt-5 text-center shadow" style="width: 25em">
+      <div class="display-4 brand" style="font-size: 4em">Log In</div>
+      <p class="text-muted mt-4 mb-5" style="font-size: 1.4em">
+        Charter Immigration
+      </p>
+      <hr class="mb-3" />
+      <button
+        class="btn btn-lg btn-google btn-block col-12"
+        (click)="goolgeLogin()"
+        type="button"
+      >
+        <i class="fa fa-google fa-fw mr-2"></i> Continue with Google
+      </button>
+      <button class="btn btn-primary" (click)="googleLogin()">my button</button>
+
+      <p class="text-muted mt-3 text-justify">
+        By Signing In you are agree to our Terms of Use and Privacy Policy
+      </p>
+    </mat-card>
+  </div>
+</div>
+
+<div class="container" *ngIf="login"></div>

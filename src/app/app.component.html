@@ -35,7 +35,7 @@
   </nav>
 </div>
 
-<div class="container text-center mb-4" style="margin-top: 50px">
+<div *ngIf="!login" class="container text-center mb-4" style="margin-top: 50px">
   <br />
   <div class="card">
     <div class="card-header">Add a Client</div>
@@ -199,7 +199,7 @@
           <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Other Name</mat-label>
-              <input matInput [(ngModel)]="otherName" name="name2sas" />
+              <input matInput [(ngModel)]="otherName" name="namse2sas" />
             </mat-form-field>
           </div>
           <div class="col-md-4">
@@ -776,6 +776,7 @@
 
   <div class="text-center">
     <button
+      (click)="sendData()"
       mat-raised-button
       color="primary"
       class="mt-4 mr-4"
@@ -787,3 +788,5 @@
     <button mat-raised-button color="warn" class="mt-4">Reset</button>
   </div>
 </div>
+
+<app-login *ngIf="login"></app-login>

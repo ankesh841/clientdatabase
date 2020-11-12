@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import {AngularFireAuth} from '@angular/fire/auth';
 
-// import { AngularFireDatabase } from 'angularfire2/database';
+import * as firebase from 'firebase';
+import { MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material/select';
 
 @Component({
   selector: 'app-root',
@@ -17,194 +19,8 @@ export class AppComponent {
   selectTitle = ['Mr.', 'Ms.', 'Mrs.']; 
   officeArray  = ['Office A', 'office b' , 'office c'];
   genderArray = ['Male', 'Female', 'Other'];
-  nationalArray = ['Afghan',  'Albanian',  'Algerian',  'American',  'Andorran',  'Angolan',
-  'Antiguans',
-  'Argentinean',
-  'Armenian',
-  'Australian',
-  'Austrian',
-  'Azerbaijani',
-  'Bahamian',
-  'Bahraini',
-  'Bangladeshi',
-  'Barbadian',
-  'Barbudans',
-  'Batswana',
-  'Belarusian',
-  'Belgian',
-  'Belizean',
-  'Beninese',
-  'Bhutanese',
-  'Bolivian',
-  'Bosnian',
-  'Brazilian',
-  'British',
-  'Bruneian',
-  'Bulgarian',
-  'Burkinabe',
-  'Burmese',
-  'Burundian',
-  'Cambodian',
-  'Cameroonian',
-  'Canadian',
-  'Cape Verdean',
-  'Central African',
-  'Chadian',
-  'Chilean',
-  'Chinese',
-  'Colombian',
-  'Comoran',
-  'Congolese',
-  'Costa Rican',
-  'Croatian',
-  'Cuban',
-  'Cypriot',
-  'Czech',
-  'Danish',
-  'Djibouti',
-  'Dominican',
-  'Dutch',
-  'East Timorese',
-  'Ecuadorean',
-  'Egyptian',
-  'Emirian',
-  'Equatorial Guinean',
-  'Eritrean',
-  'Estonian',
-  'Ethiopian',
-  'Fijian',
-  'Filipino',
-  'Finnish',
-  'French',
-  'Gabonese',
-  'Gambian',
-  'Georgian',
-  'German',
-  'Ghanaian',
-  'Greek',
-  'Grenadian',
-  'Guatemalan',
-  'Guinea-Bissauan',
-  'Guinean',
-  'Guyanese',
-  'Haitian',
-  'Herzegovinian',
-  'Honduran',
-  'Hungarian',
-  'I-Kiribati',
-  'Icelander',
-  'Indian',
-  'Indonesian',
-  'Iranian',
-  'Iraqi',
-  'Irish',
-  'Israeli',
-  'Italian',
-  'Ivorian',
-  'Jamaican',
-  'Japanese',
-  'Jordanian',
-  'Kazakhstani',
-  'Kenyan',
-  'Kittian and Nevisian',
-  'Kuwaiti',
-  'Kyrgyz',
-  'Laotian',
-  'Latvian',
-  'Lebanese',
-  'Liberian',
-  'Libyan',
-  'Liechtensteiner',
-  'Lithuanian',
-  'Luxembourger',
-  'Macedonian',
-  'Malagasy',
-  'Malawian',
-  'Malaysian',
-  'Maldivan',
-  'Malian',
-  'Maltese',
-  'Marshallese',
-  'Mauritanian',
-  'Mauritian',
-  'Mexican',
-  'Micronesian',
-  'Moldovan',
-  'Monacan',
-  'Mongolian',
-  'Moroccan',
-  'Mosotho',
-  'Motswana',
-  'Mozambican',
-  'Namibian',
-  'Nauruan',
-  'Nepalese',
-  'New Zealander',
-  'Nicaraguan',
-  'Nigerian',
-  'Nigerien',
-  'North Korean',
-  'Northern Irish',
-  'Norwegian',
-  'Omani',
-  'Pakistani',
-  'Palauan',
-  'Panamanian',
-  'Papua New Guinean',
-  'Paraguayan',
-  'Peruvian',
-  'Polish',
-  'Portuguese',
-  'Qatari',
-  'Romanian',
-  'Russian',
-  'Rwandan',
-  'Saint Lucian',
-  'Salvadoran',
-  'Samoan',
-  'San Marinese',
-  'Sao Tomean',
-  'Saudi',
-  'Scottish',
-  'Senegalese',
-  'Serbian',
-  'Seychellois',
-  'Sierra Leonean',
-  'Singaporean',
-  'Slovakian',
-  'Slovenian',
-  'Solomon Islander',
-  'Somali',
-  'South African',
-  'South Korean',
-  'Spanish',
-  'Sri Lankan',
-  'Sudanese',
-  'Surinamer',
-  'Swazi',
-  'Swedish',
-  'Swiss',
-  'Syrian',
-  'Taiwanese',
-  'Tajik',
-  'Tanzanian',
-  'Thai',
-  'Togolese',
-  'Tongan',
-  'Trinidadian/Tobagonian',
-  'Tunisian',
-  'Turkish',
-  'Tuvaluan',
-  'Ugandan',
-  'Ukrainian',
-  'Uruguayan',
-  'Uzbekistani',
-  'Venezuelan',
-  'Vietnamese',
-  'Welsh',
-  'Yemenite',
-  'Zambian',
-  'Zimbabwean'];
+  
+  nationalArray = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean', 'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi', 'Barbadian', 'Barbudans', 'Batswana', 'Belarusian', 'Belgian', 'Belizean', 'Beninese', 'Bhutanese', 'Bolivian', 'Bosnian', 'Brazilian', 'British', 'Bruneian', 'Bulgarian', 'Burkinabe', 'Burmese', 'Burundian', 'Cambodian', 'Cameroonian', 'Canadian', 'Cape Verdean', 'Central African', 'Chadian', 'Chilean', 'Chinese', 'Colombian', 'Comoran', 'Congolese', 'Costa Rican', 'Croatian', 'Cuban', 'Cypriot', 'Czech', 'Danish', 'Djibouti', 'Dominican', 'Dutch', 'East Timorese', 'Ecuadorean', 'Egyptian', 'Emirian', 'Equatorial Guinean', 'Eritrean', 'Estonian', 'Ethiopian', 'Fijian', 'Filipino', 'Finnish', 'French', 'Gabonese', 'Gambian', 'Georgian', 'German', 'Ghanaian', 'Greek', 'Grenadian', 'Guatemalan', 'Guinea-Bissauan', 'Guinean', 'Guyanese', 'Haitian', 'Herzegovinian', 'Honduran', 'Hungarian', 'I-Kiribati', 'Icelander', 'Indian', 'Indonesian', 'Iranian', 'Iraqi', 'Irish', 'Israeli', 'Italian', 'Ivorian', 'Jamaican', 'Japanese', 'Jordanian', 'Kazakhstani', 'Kenyan', 'Kittian and Nevisian', 'Kuwaiti', 'Kyrgyz', 'Laotian', 'Latvian', 'Lebanese', 'Liberian', 'Libyan', 'Liechtensteiner', 'Lithuanian', 'Luxembourger', 'Macedonian', 'Malagasy', 'Malawian', 'Malaysian', 'Maldivan', 'Malian', 'Maltese', 'Marshallese', 'Mauritanian', 'Mauritian', 'Mexican', 'Micronesian', 'Moldovan', 'Monacan', 'Mongolian', 'Moroccan', 'Mosotho', 'Motswana', 'Mozambican', 'Namibian', 'Nauruan', 'Nepalese', 'New Zealander', 'Nicaraguan', 'Nigerian', 'Nigerien', 'North Korean', 'Northern Irish', 'Norwegian', 'Omani', 'Pakistani', 'Palauan', 'Panamanian', 'Papua New Guinean', 'Paraguayan', 'Peruvian', 'Polish', 'Portuguese', 'Qatari', 'Romanian', 'Russian', 'Rwandan', 'Saint Lucian', 'Salvadoran', 'Samoan', 'San Marinese', 'Sao Tomean', 'Saudi', 'Scottish', 'Senegalese', 'Serbian', 'Seychellois', 'Sierra Leonean', 'Singaporean', 'Slovakian', 'Slovenian', 'Solomon Islander', 'Somali', 'South African', 'South Korean', 'Spanish', 'Sri Lankan', 'Sudanese', 'Surinamer', 'Swazi', 'Swedish', 'Swiss', 'Syrian', 'Taiwanese', 'Tajik', 'Tanzanian', 'Thai', 'Togolese', 'Tongan', 'Trinidadian/Tobagonian', 'Tunisian', 'Turkish', 'Tuvaluan', 'Ugandan', 'Ukrainian', 'Uruguayan', 'Uzbekistani', 'Venezuelan', 'Vietnamese', 'Welsh', 'Yemenite', 'Zambian', 'Zimbabwean'];
 
   stateArray=['Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon Territory']; 
 
@@ -212,7 +28,7 @@ export class AppComponent {
 
   occupationArray=['Student', 'Employed', 'Un-Employed', 'Other'];
   educationArray=['Diploma', 'Post-Graduate', 'Under-Graduate', 'High-School'];
-maritalArray=['Single', 'Married', 'Common-Law', 'Divorced'];
+  maritalArray=['Single', 'Married', 'Common-Law', 'Divorced'];
 
   applicationType:string;
   fileStatus:string;
@@ -236,9 +52,7 @@ maritalArray=['Single', 'Married', 'Common-Law', 'Divorced'];
   addressTwo:string;
   city:string;
   postalCode:string;
-  // permanentPostalCode:string;
-
-// mailing
+  // mailing
   addressOneMailing:string;
   addressTwoMailing:string;
   cityMailing:string;
@@ -246,55 +60,130 @@ maritalArray=['Single', 'Married', 'Common-Law', 'Divorced'];
   countryMailing:string;
   stateMailing:string
 // 
-occupation:string;
-education:string;
+  occupation:string;
+  education:string;
 
-maritalStatus:string;
-spouseTitle:string;
-spouseFirstName:string;
-spouseLastName:string;
-spouseMiddleName:string;
-spouseEducation:string;
-sponsorTitle:string;
+  maritalStatus:string;
+  spouseTitle:string;
+  spouseFirstName:string;
+  spouseLastName:string;
+  spouseMiddleName:string;
+  spouseEducation:string;
+  sponsorTitle:string;
 
-sponsorFirstName:string;
-sponsorLastName:string;
-sponsorAddress:string;
-sponsorPhone:string;
+  sponsorFirstName:string;
+  sponsorLastName:string;
+  sponsorAddress:string;
+  sponsorPhone:string;
 
-sponsorSpouseFirstName:string;
-sponsorSpouseLastName:string;
-sponsorSpouseAddress:string;
-sponsorSpousePhone:string;
+  sponsorSpouseFirstName:string;
+  sponsorSpouseLastName:string;
+  sponsorSpouseAddress:string;
+  sponsorSpousePhone:string;
+
+
 
   currentDate;
   minDate: Date;
   maxDate: Date;
-
-
-  onSubmit() {
-    
-    console.log(this.applicationType, this.memo, this.fileStatus, this.embassyFileNo, this.officeFileNo)
-    
-  }
-
-  profileForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required])
-});
 
 emailFormControl = new FormControl('', [
   Validators.required,
   Validators.email,
 ]);
 
-constructor(){
+login:Boolean;
+
+
+constructor(private afAuth:AngularFireAuth){
   const currentYear = new Date().getFullYear();
   this.minDate = new Date(currentYear - 80, 0, 1);
   this.currentDate = new Date();
    this.maxDate = this.currentDate;
 
-   
+
+this.afAuth.authState.subscribe((res)=>{
+    if(res){
+      // user logged in 
+      this.login = false;
+      console.log('user is logged in ')
+    }
+    else{
+      this.login = true;
+      console.log('showing login interface.')
+      // need to log in
 }
+})
+
+   
+  
+
+}
+ 
+
+
+firebaseRef = firebase.default.database();
+
+sendData(){
+    this.firebaseRef.ref("data/").push({
+
+      applicationType:this.applicationType,
+      fileStatus:this.fileStatus,
+      memo:this.memo,
+      embassyFileNo:this.embassyFileNo,
+      officeFileNo:this.officeFileNo,
+      EmbassyFileNo1:this.EmbassyFileNo1,
+      firstName:this.firstName,
+      caseProcessName:this.caseProcessName,
+      middleName:"this.middleName",
+      lastName:this.lastName,
+      clientStatus:this.clientStatus,
+      otherName:this.otherName,
+      whichOffice:this.whichOffice,
+      whichGender:this.whichGender,
+      whichNational:this.whichNational,
+      whichState:this.whichState,
+      whichCountry:this.whichCountry,
+    
+      addressOne:this.addressOne,
+      addressTwo:this.addressTwo,
+      city:this.city,
+      postalCode:this.postalCode,
+      // mailing
+      addressOneMailing:this.addressOneMailing,
+      addressTwoMailing:this.addressTwoMailing,
+      cityMailing:this.cityMailing,
+      postalCodeMailing:this.postalCodeMailing,
+      countryMailing:this.countryMailing,
+      stateMailing:this.stateMailing,
+    // 
+      occupation:this.occupation,
+      education:this.education,
+    
+      maritalStatus:this.maritalStatus,
+      spouseTitle:this.spouseTitle,
+      spouseFirstName:this.spouseFirstName,
+      spouseLastName:this.spouseLastName,
+      spouseMiddleName:this.spouseMiddleName,
+      spouseEducation:this.spouseEducation,
+      sponsorTitle:"this.sponsorTitle",
+    
+      sponsorFirstName:this.sponsorFirstName,
+      sponsorLastName:this.sponsorLastName,
+      sponsorAddress:this.sponsorAddress,
+      sponsorPhone:this.sponsorPhone,
+    
+      sponsorSpouseFirstName:this.sponsorSpouseFirstName,
+      sponsorSpouseLastName:this.sponsorSpouseLastName,
+
+      sponsorSpouseAddress:this.sponsorSpouseAddress,
+      sponsorSpousePhone:this.sponsorSpousePhone
+    
+
+      });
+
+
+}
+
 
 }
