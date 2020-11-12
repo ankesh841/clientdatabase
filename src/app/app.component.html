@@ -30,6 +30,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Tools</a>
         </li>
+
+        <li class="nav-item" [hidden]="login">
+          <!-- <a class="nav-link">logOut</a> -->
+          <button mat-raised-button (click)="logOut()">Log Out</button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -789,4 +794,4 @@
   </div>
 </div>
 
-<app-login *ngIf="login"></app-login>
+<app-login [hidden]="!login"></app-login>

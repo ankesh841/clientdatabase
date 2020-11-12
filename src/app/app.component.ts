@@ -135,7 +135,7 @@ sendData(){
       EmbassyFileNo1:this.EmbassyFileNo1,
       firstName:this.firstName,
       caseProcessName:this.caseProcessName,
-      middleName:"this.middleName",
+      middleName:this.middleName,
       lastName:this.lastName,
       clientStatus:this.clientStatus,
       otherName:this.otherName,
@@ -166,7 +166,7 @@ sendData(){
       spouseLastName:this.spouseLastName,
       spouseMiddleName:this.spouseMiddleName,
       spouseEducation:this.spouseEducation,
-      sponsorTitle:"this.sponsorTitle",
+      sponsorTitle:this.sponsorTitle,
     
       sponsorFirstName:this.sponsorFirstName,
       sponsorLastName:this.sponsorLastName,
@@ -185,5 +185,13 @@ sendData(){
 
 }
 
+logOut(){
+  console.log('clicking')
+    this.afAuth.signOut().then(function(){
+      console.log('sign out sucesfful')
+    }).catch(function(error){
+      console.log(error)
+    })
+}
 
 }
