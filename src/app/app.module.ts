@@ -39,10 +39,15 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import * as firebase from 'firebase';
 
 
+// import { AngularFireStorage } from 'angularfire2/storage';
+
+
 import {MatExpansionModule} from '@angular/material/expansion';
 
 // firebase.initializeApp(environment.firebase);
 import { AngularFireModule } from '@angular/fire';
+// import {AngularFireStorage} from '@angular/fire/storage';
+
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
@@ -51,6 +56,7 @@ import { AddClientComponent } from './add-client/add-client.component';
 
 import {MatListModule} from '@angular/material/list';
 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
@@ -72,9 +78,10 @@ const routes: Routes = [
   ],
   imports: [
     MatListModule,
+    // AngularFireStorage,
     MatSidenavModule,
     // AngularFireModule,
-
+    MatSnackBarModule,
     MatCheckboxModule,
     MatExpansionModule,
     // AngularFireDatabaseModule,

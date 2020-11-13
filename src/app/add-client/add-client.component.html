@@ -834,7 +834,15 @@
         Add
       </button>
 
-      <button mat-raised-button color="warn" class="mt-4">Reset</button>
+      <button
+        type="reset"
+        (click)="onReset()"
+        mat-raised-button
+        color="warn"
+        class="mt-4"
+      >
+        Reset
+      </button>
     </div>
   </form>
 </div>

@@ -1,45 +1,3 @@
-<div class="container text-center">
-  <!-- <div class="card"> -->
-  <div class="row">
-    <div class="col-md-4 col-sm-4">
-      <div class="card">
-        <div class="card-body">
-          <a [routerLink]="['/addClient']"
-            ><img
-              class="iconDefaultDimensions"
-              src="../../assets/addClient.png"
-            />
-          </a>
-        </div>
-        Add a Client
-      </div>
-    </div>
-
-    <div class="col-md-4 col-sm-4">
-      <div class="card">
-        <div class="card-body">
-          <img class="iconDefaultDimensions" src="../../assets/search.png" />
-        </div>
-
-        Search
-      </div>
-    </div>
-
-    <div class="col-md-4 col-sm-4">
-      <div class="card">
-        <div class="card-body">
-          <img class="iconDefaultDimensions" src="../../assets/upgrade.png" />
-        </div>
-
-        Update Records
-      </div>
-    </div>
-  </div>
-  <!-- </div> -->
-</div>
-
-<mat-divider class="my-3"> </mat-divider>
-
 <div class="container" style="color: white">
   <div class="row">
     <div class="col-md-4 pb-2 mb-2">
@@ -110,6 +68,69 @@
     </div> -->
   </div>
 </div>
+
+<!-- end of div -->
+
+<mat-divider> </mat-divider>
+
+<div class="container text-center mt-3">
+  <!-- <div class="card"> -->
+  <div class="row">
+    <div class="col-md-4 col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <a [routerLink]="['/addClient']"
+            ><img
+              class="iconDefaultDimensions"
+              src="../../assets/addClient.png"
+            />
+          </a>
+        </div>
+        Add a Client
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <img class="iconDefaultDimensions" src="../../assets/search.png" />
+        </div>
+
+        Search
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <img class="iconDefaultDimensions" src="../../assets/upgrade.png" />
+        </div>
+
+        Update Records
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3 pl">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <img
+            style="height: 80px; width: 120px"
+            src="../../assets/storage.png"
+          />
+        </div>
+        File Storage
+      </div>
+    </div>
+  </div>
+
+  <!-- </div> -->
+</div>
+<!--  -->
+
+<!-- <label for="file">File:</label>
+<input type="file" (change)="upload($event)" accept=".png,.jpg" /> -->
 
 <nav
   id="bottomNav_"

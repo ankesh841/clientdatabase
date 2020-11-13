@@ -7,6 +7,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 
 import * as firebase from 'firebase';
 import { SplitInterpolation } from '@angular/compiler';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -87,6 +88,9 @@ export class AddClientComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
     if (this.registerForm.invalid) {
+
+      this.openSnackBar("Input Error", "Close");
+      
       return;
     }
     else{
@@ -94,13 +98,20 @@ export class AddClientComponent implements OnInit {
     }
     
     // display form values on success
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    alert('successfully added')
+  }
+
+  onReset(){
+    this.submitted = false;
+    this.registerForm.reset();
+
   }
 
 
 
 
-  constructor(private afAuth:AngularFireAuth, private formBuilder: FormBuilder){
+  constructor(private afAuth:AngularFireAuth, private formBuilder: FormBuilder, private _snackBar: MatSnackBar){
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 80, 0, 1);
     this.currentDate = new Date();
@@ -353,6 +364,13 @@ isMailingAddressSameBoolean:boolean;
     }   
   }
 
+
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
 logOut(){
   console.log('clicking')
