@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, defineInjectable, OnInit } from '@angular/core';
+import { FormBuilder, NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 import {AngularFireAuth} from '@angular/fire/auth';
 
 import * as firebase from 'firebase';
+import { SplitInterpolation } from '@angular/compiler';
 
 
 @Component({
@@ -12,9 +15,108 @@ import * as firebase from 'firebase';
   styleUrls: ['./add-client.component.css']
 })
 export class AddClientComponent implements OnInit {
+ 
+  registerForm: FormGroup;
+  submitted = false;
+ 
   ngOnInit(): void {
+  
+    this.registerForm = this.formBuilder.group({
+      secondSelect: ['', Validators.required],
+      // inp: ['', Validators.required],
+      first:['', Validators.required],
+
+      inputOffice:new FormControl(),
+      // inputOffice1:['', Validators.required],
+
+      name2:['', Validators.required],
+      name2q:['', Validators.required],
+      clientsta:['', Validators.required],
+      name2s:['', Validators.required],
+      gende:['', Validators.required],
+      clientDOB1:['', Validators.required],
+      phonenumberclientt:['', Validators.required],
+      clientstassa:['', Validators.required],
+      addsre:['', Validators.required],
+      cihtyl:['', Validators.required],
+      cflientstassa:['', Validators.required],
+      // memoInputdf:['', Validators.required],
+      cfflientstassa:['', Validators.required],
+      addsrsdae:['', Validators.required],
+      cightyl:['', Validators.required],
+      cfliefntstassa:['', Validators.required],
+      memoInpfutdf:['', Validators.required],
+      cfflientgstassa:['', Validators.required],
+      fcfflientgstassa:['', Validators.required],
+      cfflientgstassfa:['', Validators.required],
+      cfflientgdsfstassdfa:['', Validators.required],
+      nasdame2:['', Validators.required],
+      namdfsesadf2:['', Validators.required],
+      spousedateofbirthd_:['', Validators.required],
+
+      //optionals
+      memoInput:['', Validators.nullValidator],
+      name22:['', Validators.nullValidator],
+      namse2sas:['', Validators.nullValidator],
+      nasdfsame2:['', Validators.nullValidator],
+      nasddsame2:['', Validators.nullValidator],
+      adddasre:['', Validators.nullValidator],
+      sdlfkjsa:['', Validators.nullValidator],
+      nasdfssdfame2:['', Validators.nullValidator],
+      nasddsdfame2:['', Validators.nullValidator],
+      adddfasadsre:['', Validators.nullValidator],
+      sdlfkjsasaf:['', Validators.nullValidator],
+      memofInputdf:['', Validators.nullValidator],
+      namdfse2:['', Validators.nullValidator],
+      dj:['', Validators.nullValidator],
+      inp:['', Validators.nullValidator],
+      inputOffice1:['', Validators.nullValidator],
+      memoInputdf:['', Validators.nullValidator]
+    });
+
+//   this.registerForm = new FormGroup({
+//     memoInput: new FormControl(),
+//     secondSelect:new FormControl()
+//  });
+
   }
 
+  get f() { return this.registerForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+      return;
+    }
+    else{
+      this.sendData();
+    }
+    
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+  }
+
+
+
+
+  constructor(private afAuth:AngularFireAuth, private formBuilder: FormBuilder){
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 80, 0, 1);
+    this.currentDate = new Date();
+     this.maxDate = this.currentDate;
+  this.afAuth.authState.subscribe((res)=>{
+      if(res){
+        this.login = false;
+        console.log('user is logged in ')
+      }
+      else{
+        this.login = true;
+        console.log('showing login interface.')
+  }
+  })
+  }
+  
   
 
   
@@ -89,7 +191,8 @@ export class AddClientComponent implements OnInit {
   sponsorSpouseAddress:string;
   sponsorSpousePhone:string;
 
-
+  clientDOB:string;
+  phoneNumberClient
 
   currentDate;
   minDate: Date;
@@ -103,50 +206,44 @@ emailFormControl = new FormControl('', [
 login:Boolean;
 
 
-constructor(private afAuth:AngularFireAuth){
-  const currentYear = new Date().getFullYear();
-  this.minDate = new Date(currentYear - 80, 0, 1);
-  this.currentDate = new Date();
-   this.maxDate = this.currentDate;
 
 
-this.afAuth.authState.subscribe((res)=>{
-    if(res){
-      // user logged in 
-      this.login = false;
-      console.log('user is logged in ')
-    }
-    else{
-      this.login = true;
-      console.log('showing login interface.')
-      // need to log in
+ firebaseRef = firebase.default.database();
+
+
+onsubmitForm(){
+  console.log('onsubmit form ')
 }
-})
-
-   
-  
-
-}
- 
-
-
-firebaseRef = firebase.default.database();
 
 sendData(){
-    this.firebaseRef.ref("data/").push({
+
+    if(!this.memo){
+      this.memo="NA"
+    }
+    
+
+
+
+
+
+   this.firebaseRef.ref("data/").push({
 
       applicationType:this.applicationType,
       fileStatus:this.fileStatus,
       memo:this.memo,
-      embassyFileNo:this.embassyFileNo,
+//optional
+      embassyFileNo:(this.embassyFileNo)?this.embassyFileNo:"NA",
+
       officeFileNo:this.officeFileNo,
-      EmbassyFileNo1:this.EmbassyFileNo1,
+
+      EmbassyFileNo1:(this.EmbassyFileNo1)?this.EmbassyFileNo1:"NA",
+      
       firstName:this.firstName,
-      caseProcessName:this.caseProcessName,
-      middleName:this.middleName,
+      caseProcessName:(this.caseProcessName)?this.caseProcessName:"NA",
+      middleName:(this.middleName)?this.middleName:"NA",
       lastName:this.lastName,
       clientStatus:this.clientStatus,
-      otherName:this.otherName,
+      otherName:(this.otherName)?this.otherName:"NA",
       whichOffice:this.whichOffice,
       whichGender:this.whichGender,
       whichNational:this.whichNational,
@@ -154,7 +251,7 @@ sendData(){
       whichCountry:this.whichCountry,
     
       addressOne:this.addressOne,
-      addressTwo:this.addressTwo,
+      addressTwo:(this.addressTwo)?this.addressTwo:"NA",
       city:this.city,
       postalCode:this.postalCode,
       // mailing
@@ -169,12 +266,13 @@ sendData(){
       education:this.education,
     
       maritalStatus:this.maritalStatus,
-      spouseTitle:this.spouseTitle,
-      spouseFirstName:this.spouseFirstName,
-      spouseLastName:this.spouseLastName,
-      spouseMiddleName:this.spouseMiddleName,
-      spouseEducation:this.spouseEducation,
-      sponsorTitle:this.sponsorTitle,
+      spouseTitle:(this.spouseTitle)?this.spouseTitle:"NA",
+      spouseFirstName:(this.spouseFirstName)?this.spouseFirstName:"NA",
+      spouseLastName:(this.spouseLastName)?this.spouseLastName:"NA",
+      spouseMiddleName:(this.spouseMiddleName)?this.spouseMiddleName:"NA",
+      spouseEducation:(this.spouseEducation)?this.spouseEducation:"NA",
+ 
+      sponsorTitle:(this.sponsorTitle)?this.sponsorTitle:" ",
     
       sponsorFirstName:this.sponsorFirstName,
       sponsorLastName:this.sponsorLastName,
@@ -240,12 +338,15 @@ isMailingAddressSameBoolean:boolean;
     console.log(event.value)
     if(event.value === "Single"){
       this.checkingmaritalStatusBoolean = true;
+
+    
       this.spouseTitle = '';
       this.spouseFirstName = '';
       this.spouseMiddleName = '';
       this.spouseLastName = '';
       this.spousedateOfBirth = '';
-      this.spouseEducation = '';
+      // this.spouseEducation = '';
+
     }
     else{
       this.checkingmaritalStatusBoolean = false;

@@ -1,16 +1,12 @@
-<!-- #1976d2 -->
-<!-- <mat-toolbar color="primary">
-  <span> Client Database</span>
-</mat-toolbar> -->
-
 <div *ngIf="!login" class="container text-center mb-4" style="margin-top: 50px">
   <br />
-  <div class="card">
-    <div class="card-header">Add a Client</div>
-    <div class="card-body">
-      <!-- first row -->
 
-      <form>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-header">Add a Client</div>
+      <div class="card-body">
+        <!-- first row -->
+
         <div class="row">
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_" require>
@@ -18,7 +14,7 @@
               <mat-select
                 required
                 [(ngModel)]="applicationType"
-                name="first"
+                formControlName="first"
                 (selectionChange)="selectedApplicationType()"
               >
                 <mat-option
@@ -37,7 +33,7 @@
                 matInput
                 placeholder="Optional"
                 [(ngModel)]="memo"
-                name="memoInput"
+                formControlName="memoInput"
               ></textarea>
             </mat-form-field>
           </div>
@@ -45,7 +41,11 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>File Status</mat-label>
-              <mat-select [(ngModel)]="fileStatus" name="secondSelect" required>
+              <mat-select
+                [(ngModel)]="fileStatus"
+                formControlName="secondSelect"
+                required
+              >
                 <mat-option>--Select--</mat-option>
                 <mat-option
                   *ngFor="let item of fileStatusArray"
@@ -56,12 +56,11 @@
             </mat-form-field>
           </div>
         </div>
-      </form>
-      <!-- end of row -->
 
-      <!-- second row -->
+        <!-- end of row -->
 
-      <form>
+        <!-- second row -->
+
         <div class="row">
           <div class="col-md-6">
             <mat-form-field class="width_">
@@ -70,7 +69,7 @@
                 matInput
                 placeholder="Optional"
                 [(ngModel)]="embassyFileNo"
-                name="inp"
+                formControlName="inp"
               />
             </mat-form-field>
           </div>
@@ -81,25 +80,25 @@
                 matInput
                 placeholder="Required"
                 [(ngModel)]="officeFileNo"
-                name="inputOffice"
                 disabled
+                formControlName="inputOffice"
+                readonly
               />
             </mat-form-field>
           </div>
         </div>
-      </form>
-      <!-- end of second row -->
-    </div>
-    <!-- end of card body -->
-  </div>
-  <!-- end of card -->
-  <br />
-  <!--  -->
-  <div class="card">
-    <div class="card-header">Client General Information</div>
 
-    <div class="card-body">
-      <form>
+        <!-- end of second row -->
+      </div>
+      <!-- end of card body -->
+    </div>
+    <!-- end of card -->
+    <br />
+    <!--  -->
+    <div class="card">
+      <div class="card-header">Client General Information</div>
+
+      <div class="card-body">
         <div class="row">
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
@@ -117,51 +116,69 @@
               <input
                 matInput
                 [(ngModel)]="EmbassyFileNo1"
-                name="inputOffice1"
+                formControlName="inputOffice1"
               />
             </mat-form-field>
           </div>
           <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>First Name</mat-label>
-              <input matInput [(ngModel)]="firstName" name="name2" required />
+              <input
+                matInput
+                [(ngModel)]="firstName"
+                formControlName="name2"
+                required
+              />
             </mat-form-field>
           </div>
         </div>
-      </form>
 
-      <!-- second row -->
+        <!-- second row -->
 
-      <form>
         <div class="row">
           <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Case Process Name</mat-label>
-              <input matInput [(ngModel)]="caseProcessName" name="name2q" />
+              <input
+                matInput
+                [(ngModel)]="caseProcessName"
+                formControlName="name2q"
+              />
             </mat-form-field>
           </div>
           <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Middle Name</mat-label>
-              <input matInput [(ngModel)]="middleName" name="name22" />
+              <input
+                matInput
+                [(ngModel)]="middleName"
+                formControlName="name22"
+              />
             </mat-form-field>
           </div>
           <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Last Name</mat-label>
-              <input matInput [(ngModel)]="lastName" name="name2s" required />
+              <input
+                matInput
+                [(ngModel)]="lastName"
+                formControlName="name2s"
+                required
+              />
             </mat-form-field>
           </div>
         </div>
-      </form>
-      <!-- third row -->
 
-      <form>
+        <!-- third row -->
+
         <div class="row">
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Client Status</mat-label>
-              <mat-select [(ngModel)]="clientStatus" name="clientsta">
+              <mat-select
+                [(ngModel)]="clientStatus"
+                formControlName="clientsta"
+              >
                 <mat-option
                   *ngFor="let item of fileStatusArray"
                   value="{{ item }}"
@@ -173,13 +190,21 @@
           <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Other Name</mat-label>
-              <input matInput [(ngModel)]="otherName" name="namse2sas" />
+              <input
+                matInput
+                [(ngModel)]="otherName"
+                formControlName="namse2sas"
+              />
             </mat-form-field>
           </div>
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Office</mat-label>
-              <mat-select [(ngModel)]="whichOffice" name="clientsta" required>
+              <mat-select
+                [(ngModel)]="whichOffice"
+                formControlName="clientsta"
+                required
+              >
                 <mat-option *ngFor="let item of officeArray" value="{{ item }}"
                   >{{ item }}
                 </mat-option>
@@ -187,21 +212,25 @@
             </mat-form-field>
           </div>
         </div>
-      </form>
-      <!-- fourth row -->
-      <div class="row">
-        <div class="col-md-4">
-          <mat-form-field appearance="outline" class="width_">
-            <mat-label>Gender</mat-label>
-            <mat-select [(ngModel)]="whichGender" name="gende" required>
-              <mat-option *ngFor="let item of genderArray" value="{{ item }}"
-                >{{ item }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-4">
-          <form class="example-form">
+
+        <!-- fourth row -->
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" class="width_">
+              <mat-label>Gender</mat-label>
+              <mat-select
+                [(ngModel)]="whichGender"
+                formControlName="gende"
+                required
+              >
+                <mat-option *ngFor="let item of genderArray" value="{{ item }}"
+                  >{{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <!-- <form class="example-form"> -->
             <mat-form-field class="example-full-width">
               <mat-label>Email</mat-label>
               <input
@@ -223,10 +252,8 @@
                 Email is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </form>
-        </div>
-        <div class="col-md-4">
-          <form>
+          </div>
+          <div class="col-md-4">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>Date of Birth</mat-label>
               <input
@@ -234,6 +261,8 @@
                 [min]="minDate"
                 [max]="maxDate"
                 [matDatepicker]="picker"
+                [(ngModel)]="clientDOB"
+                formControlName="clientDOB1"
                 required
               />
               <mat-datepicker-toggle
@@ -242,31 +271,34 @@
               ></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <!-- end of fourth row -->
-      <!--  -->
-      <div class="row">
-        <div class="col-md-6">
-          <form>
+        <!-- end of fourth row -->
+        <!--  -->
+        <div class="row">
+          <div class="col-md-6">
             <mat-form-field class="width_">
               <mat-label>Telephone</mat-label>
               <span matPrefix>+1 &nbsp;</span>
-              <input type="tel" matInput placeholder="555-555-1234" required />
+              <input
+                type="tel"
+                matInput
+                placeholder="555-555-1234"
+                [(ngModel)]="phoneNumberClient"
+                formControlName="phonenumberclientt"
+                required
+              />
               <mat-icon matSuffix>edit</mat-icon>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-6">
-          <form>
+          <div class="col-md-6">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Select Nationality</mat-label>
               <mat-select
                 [(ngModel)]="whichNational"
-                name="clientstassa"
+                formControlName="clientstassa"
                 required
               >
                 <mat-option
@@ -276,67 +308,64 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
+          </div>
         </div>
+
+        <!-- fourth row end -->
       </div>
-
-      <!-- fourth row end -->
     </div>
-  </div>
-  <!-- end second card. -->
+    <!-- end second card. -->
 
-  <br />
+    <br />
 
-  <div class="card">
-    <div class="card-header">Permanent Address</div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-4">
-          <form>
+    <div class="card">
+      <div class="card-header">Permanent Address</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address #1</mat-label>
               <textarea
                 matInput
                 [(ngModel)]="addressOne"
-                name="addsre"
+                formControlName="addsre"
                 required
               ></textarea>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address #2</mat-label>
               <textarea
                 matInput
                 [(ngModel)]="addressTwo"
-                name="memoInputdf"
+                formControlName="memoInputdf"
               ></textarea>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>City</mat-label>
-              <input matInput [(ngModel)]="city" name="cihtyl" required />
+              <input
+                matInput
+                [(ngModel)]="city"
+                formControlName="cihtyl"
+                required
+              />
             </mat-form-field>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <!-- second row -->
-      <div class="row">
-        <div class="col-md-4">
-          <form>
+        <!-- second row -->
+        <div class="row">
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>State</mat-label>
               <mat-select
                 [(ngModel)]="whichState"
-                name="cflientstassa"
+                formControlName="cflientstassa"
                 required
               >
                 <mat-option *ngFor="let item of stateArray" value="{{ item }}"
@@ -344,31 +373,27 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Postal Code</mat-label>
               <input
                 matInput
                 [(ngModel)]="postalCode"
-                name="memoInputdf"
+                formControlName="memoInputdf"
                 maxlength="6"
                 required
               />
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Country</mat-label>
               <mat-select
                 [(ngModel)]="whichCountry"
-                name="cfflientstassa"
+                formControlName="cfflientstassa"
                 required
               >
                 <mat-option *ngFor="let item of countryArray" value="{{ item }}"
@@ -376,142 +401,128 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- end 5th card -->
+    <!-- end 5th card -->
 
-  <br />
+    <br />
 
-  <!-- -->
-  <!-- start mailing -->
+    <!-- -->
+    <!-- start mailing -->
 
-  <div class="card">
-    <div class="card-header">Mailing Address</div>
-    <div class="card-body">
-      <mat-checkbox (change)="isMailingAddressSame($event)">
-        Mailing Address Same as permanent?
-      </mat-checkbox>
+    <div class="card">
+      <div class="card-header">Mailing Address</div>
+      <div class="card-body">
+        <mat-checkbox (change)="isMailingAddressSame($event)">
+          Mailing Address Same as permanent?
+        </mat-checkbox>
 
-      <div class="row">
-        <div class="col-md-4">
-          <form>
+        <div class="row">
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address #1</mat-label>
               <textarea
-                [disabled]="isMailingAddressSameBoolean"
+                [attr.disabled]="isMailingAddressSameBoolean"
                 matInput
                 [(ngModel)]="addressOneMailing"
-                name="addsrsdae"
+                formControlName="addsrsdae"
               ></textarea>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address #2</mat-label>
               <textarea
-                [disabled]="isMailingAddressSameBoolean"
+                [attr.disabled]="isMailingAddressSameBoolean"
                 matInput
                 [(ngModel)]="addressTwoMailing"
-                name="memofInputdf"
+                formControlName="memofInputdf"
               ></textarea>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>City</mat-label>
               <input
-                [disabled]="isMailingAddressSameBoolean"
+                [attr.disabled]="isMailingAddressSameBoolean"
                 matInput
                 [(ngModel)]="cityMailing"
-                name="cightyl"
+                formControlName="cightyl"
               />
             </mat-form-field>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <!-- second row -->
-      <div class="row">
-        <div class="col-md-4">
-          <form>
+        <!-- second row -->
+        <div class="row">
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>State</mat-label>
               <mat-select
-                [disabled]="isMailingAddressSameBoolean"
+                [attr.disabled]="isMailingAddressSameBoolean"
                 [(ngModel)]="stateMailing"
-                name="cfliefntstassa"
+                formControlName="cfliefntstassa"
               >
                 <mat-option *ngFor="let item of stateArray" value="{{ item }}"
                   >{{ item }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Postal Code</mat-label>
               <input
-                [disabled]="isMailingAddressSameBoolean"
+                [attr.disabled]="isMailingAddressSameBoolean"
                 matInput
                 [(ngModel)]="postalCodeMailing"
-                name="memoInpfutdf"
+                formControlName="memoInpfutdf"
                 maxlength="6"
               />
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Country</mat-label>
               <mat-select
-                [disabled]="isMailingAddressSameBoolean"
+                [attr.disabled]="isMailingAddressSameBoolean"
                 [(ngModel)]="countryMailing"
-                name="cfflientgstassa"
+                formControlName="cfflientgstassa"
               >
                 <mat-option *ngFor="let item of countryArray" value="{{ item }}"
                   >{{ item }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- end mailing -->
+    <!-- end mailing -->
 
-  <!-- end contact -->
+    <!-- end contact -->
 
-  <br />
+    <br />
 
-  <!--  -->
-  <div class="card">
-    <div class="card-header">Other Info</div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-4">
-          <form>
+    <!--  -->
+    <div class="card">
+      <div class="card-header">Other Info</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Occupation</mat-label>
               <mat-select
                 [(ngModel)]="occupation"
-                name="fcfflientgstassa"
+                formControlName="fcfflientgstassa"
                 required
               >
                 <mat-option
@@ -521,17 +532,15 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Education</mat-label>
               <mat-select
                 [(ngModel)]="education"
                 required
-                name="cfflientgstassfa"
+                formControlName="cfflientgstassfa"
               >
                 <mat-option
                   *ngFor="let item of educationArray"
@@ -540,100 +549,96 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Marital Status</mat-label>
               <mat-select
                 required
                 (selectionChange)="checkMaritalStatus($event)"
                 [(ngModel)]="maritalStatus"
-                name="cfflientgdsfstassdfa"
+                formControlName="cfflientgdsfstassdfa"
               >
                 <mat-option *ngFor="let item of maritalArray" value="{{ item }}"
                   >{{ item }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- end  -->
+    <!-- end  -->
 
-  <!-- if married -->
+    <!-- if married -->
 
-  <br />
-  <div class="card">
-    <div class="card-header">Spouse Details</div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-4">
-          <mat-form-field appearance="outline" class="width_">
-            <mat-label>Select Title</mat-label>
-            <mat-select
-              [disabled]="checkingmaritalStatusBoolean"
-              [(ngModel)]="spouseTitle"
-              name="dj"
-            >
-              <mat-option *ngFor="let item of selectTitle" value="{{ item }}"
-                >{{ item }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+    <br />
+    <div class="card">
+      <div class="card-header">Spouse Details</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" class="width_">
+              <mat-label>Select Title</mat-label>
+              <mat-select
+                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
+                [(ngModel)]="spouseTitle"
+                formControlName="dj"
+              >
+                <mat-option *ngFor="let item of selectTitle" value="{{ item }}"
+                  >{{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field class="width_">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
+                [(ngModel)]="spouseFirstName"
+                formControlName="nasdame2"
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field class="width_">
+              <mat-label>Middle Name</mat-label>
+              <input
+                matInput
+                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
+                [(ngModel)]="spouseMiddleName"
+                formControlName="namdfse2"
+              />
+            </mat-form-field>
+          </div>
         </div>
 
-        <div class="col-md-4">
-          <mat-form-field class="width_">
-            <mat-label>First Name</mat-label>
-            <input
-              matInput
-              [disabled]="checkingmaritalStatusBoolean"
-              [(ngModel)]="spouseFirstName"
-              name="nasdame2"
-            />
-          </mat-form-field>
-        </div>
+        <!-- second row -->
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="width_">
+              <mat-label>Last Name</mat-label>
+              <input
+                matInput
+                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
+                [(ngModel)]="spouseLastName"
+                formControlName="namdfsesadf2"
+              />
+            </mat-form-field>
+          </div>
 
-        <div class="col-md-4">
-          <mat-form-field class="width_">
-            <mat-label>Middle Name</mat-label>
-            <input
-              matInput
-              [disabled]="checkingmaritalStatusBoolean"
-              [(ngModel)]="spouseMiddleName"
-              name="namdfse2"
-            />
-          </mat-form-field>
-        </div>
-      </div>
-
-      <!-- second row -->
-      <div class="row">
-        <div class="col-md-4">
-          <mat-form-field class="width_">
-            <mat-label>Last Name</mat-label>
-            <input
-              matInput
-              [disabled]="checkingmaritalStatusBoolean"
-              [(ngModel)]="spouseLastName"
-              name="namdfsesadf2"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>Date of Birth</mat-label>
               <input
                 [(ngModel)]="spousedateOfBirth"
-                name="spousedateofbirthd_"
-                [disabled]="checkingmaritalStatusBoolean"
+                formControlName="spousedateofbirthd_"
+                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 matInput
                 [min]="minDate"
                 [max]="maxDate"
@@ -645,17 +650,15 @@
               ></mat-datepicker-toggle>
               <mat-datepicker #spousePicker></mat-datepicker>
             </mat-form-field>
-          </form>
-        </div>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Education</mat-label>
               <mat-select
-                [disabled]="checkingmaritalStatusBoolean"
+                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 [(ngModel)]="spouseEducation"
-                name="cfflientgstassfa"
+                formControlName="cfflientgstassfa"
               >
                 <mat-option
                   *ngFor="let item of educationArray"
@@ -664,173 +667,176 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <br />
-  <div class="card">
-    <div class="card-header">Sponsor Details</div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-4">
-          <mat-form-field class="width_">
-            <mat-label>First Name</mat-label>
-            <input matInput [(ngModel)]="sponsorFirstName" name="nasdfsame2" />
-          </mat-form-field>
-        </div>
+    <br />
+    <div class="card">
+      <div class="card-header">Sponsor Details</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="width_">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                [(ngModel)]="sponsorFirstName"
+                formControlName="nasdfsame2"
+              />
+            </mat-form-field>
+          </div>
 
-        <div class="col-md-4">
-          <mat-form-field class="width_">
-            <mat-label>Last Name</mat-label>
-            <input matInput [(ngModel)]="sponsorLastName" name="nasddsame2" />
-          </mat-form-field>
-        </div>
+          <div class="col-md-4">
+            <mat-form-field class="width_">
+              <mat-label>Last Name</mat-label>
+              <input
+                matInput
+                [(ngModel)]="sponsorLastName"
+                formControlName="nasddsame2"
+              />
+            </mat-form-field>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address</mat-label>
               <textarea
                 matInput
                 [(ngModel)]="sponsorAddress"
-                name="adddasre"
+                formControlName="adddasre"
               ></textarea>
             </mat-form-field>
-          </form>
-        </div>
-      </div>
-
-      <!-- second row -->
-      <div class="row">
-        <div class="col-md-6">
-          <mat-form-field class="width_">
-            <mat-label>Telephone</mat-label>
-            <span matPrefix>+1 &nbsp;</span>
-            <input
-              type="tel"
-              matInput
-              placeholder="555-555-1234"
-              [(ngModel)]="sponsorPhone"
-              name="sdlfkjsa"
-            />
-            <mat-icon matSuffix>edit</mat-icon>
-          </mat-form-field>
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Date of Birth</mat-label>
-            <input
-              matInput
-              [min]="minDate"
-              [max]="maxDate"
-              [matDatepicker]="sponsorPicker_2"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="sponsorPicker_2"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #sponsorPicker_2></mat-datepicker>
-          </mat-form-field>
+        <!-- second row -->
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="width_">
+              <mat-label>Telephone</mat-label>
+              <span matPrefix>+1 &nbsp;</span>
+              <input
+                type="tel"
+                matInput
+                placeholder="555-555-1234"
+                [(ngModel)]="sponsorPhone"
+                formControlName="sdlfkjsa"
+              />
+              <mat-icon matSuffix>edit</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Date of Birth</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="sponsorPicker_2"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="sponsorPicker_2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #sponsorPicker_2></mat-datepicker>
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <br />
-  <div class="card">
-    <div class="card-header">Sponsor Spouse's Details</div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-4">
-          <mat-form-field class="width_">
-            <mat-label>First Name</mat-label>
-            <input
-              matInput
-              [(ngModel)]="sponsorSpouseFirstName"
-              name="nasdfssdfame2"
-            />
-          </mat-form-field>
-        </div>
+    <br />
+    <div class="card">
+      <div class="card-header">Sponsor Spouse's Details</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="width_">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                [(ngModel)]="sponsorSpouseFirstName"
+                formControlName="nasdfssdfame2"
+              />
+            </mat-form-field>
+          </div>
 
-        <div class="col-md-4">
-          <mat-form-field class="width_">
-            <mat-label>Last Name</mat-label>
-            <input
-              matInput
-              [(ngModel)]="sponsorSpouseLastName"
-              name="nasddsdfame2"
-            />
-          </mat-form-field>
-        </div>
+          <div class="col-md-4">
+            <mat-form-field class="width_">
+              <mat-label>Last Name</mat-label>
+              <input
+                matInput
+                [(ngModel)]="sponsorSpouseLastName"
+                formControlName="nasddsdfame2"
+              />
+            </mat-form-field>
+          </div>
 
-        <div class="col-md-4">
-          <form>
+          <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address</mat-label>
               <textarea
                 matInput
                 [(ngModel)]="sponsorSpouseAddress"
-                name="adddfasadsre"
+                formControlName="adddfasadsre"
               ></textarea>
             </mat-form-field>
-          </form>
-        </div>
-      </div>
-
-      <!-- second row -->
-      <div class="row">
-        <div class="col-md-6">
-          <mat-form-field class="width_">
-            <mat-label>Telephone</mat-label>
-            <span matPrefix>+1 &nbsp;</span>
-            <input
-              type="tel"
-              matInput
-              placeholder="555-555-1234"
-              [(ngModel)]="sponsorSpousePhone"
-              name="sdlfkjsasaf"
-            />
-            <mat-icon matSuffix>edit</mat-icon>
-          </mat-form-field>
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Date of Birth</mat-label>
-            <input
-              matInput
-              [min]="minDate"
-              [max]="maxDate"
-              [matDatepicker]="sponsorSpouseDate"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="sponsorSpouseDate"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #sponsorSpouseDate></mat-datepicker>
-          </mat-form-field>
+        <!-- second row -->
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="width_">
+              <mat-label>Telephone</mat-label>
+              <span matPrefix>+1 &nbsp;</span>
+              <input
+                type="tel"
+                matInput
+                placeholder="555-555-1234"
+                [(ngModel)]="sponsorSpousePhone"
+                formControlName="sdlfkjsasaf"
+              />
+              <mat-icon matSuffix>edit</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Date of Birth</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="sponsorSpouseDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="sponsorSpouseDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #sponsorSpouseDate></mat-datepicker>
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="text-center">
-    <button
-      (click)="sendData()"
-      mat-raised-button
-      color="primary"
-      class="mt-4 mr-4"
-      style="height: 50px; width: 100px"
-    >
-      Add
-    </button>
+    <div class="text-center">
+      <button
+        mat-raised-button
+        color="primary"
+        class="mt-4 mr-4"
+        style="height: 50px; width: 100px"
+      >
+        Add
+      </button>
 
-    <button mat-raised-button color="warn" class="mt-4">Reset</button>
-  </div>
+      <button mat-raised-button color="warn" class="mt-4">Reset</button>
+    </div>
+  </form>
 </div>
 
 <app-login [hidden]="!login"></app-login>
