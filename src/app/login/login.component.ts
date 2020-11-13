@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
     console.log('logged in')
 
   })
-   console.log(this.userEmail, this.userPassword)
 
  }
  loginMethod(){
