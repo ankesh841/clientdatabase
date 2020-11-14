@@ -2,14 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
-
-
 import {AngularFireAuth} from '@angular/fire/auth';
-
-import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
-// import { runInThisContext } from 'vm';
-// import { MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material/select';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +18,26 @@ export class AppComponent {
     shareReplay()
   );
 
-  constructor(private breakpointObserver: BreakpointObserver){}
+  login:boolean;
   
+
+  constructor(private breakpointObserver: BreakpointObserver, private afAuth:AngularFireAuth){
+
+    this.afAuth.authState.subscribe((res) => {
+      if (res) {
+        // console.log(res.email);
+        this.login = true;
+      }
+      else {
+        // console.log('Not logged In');
+        this.login = false;
+
+        }
+    })
+  }
+
+  logOut(){
+    this.afAuth.signOut();
+  }
 
 }

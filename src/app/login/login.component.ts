@@ -10,12 +10,12 @@ export class LoginComponent implements OnInit {
   login:boolean;
 
   constructor(private afAuth:AngularFireAuth) {
-    console.log('i ma in constructor')
 
+    
 
    }
   ngOnInit(): void {
-  }
+  } 
   goolgeLogin(){
     console.log('google loginm clicnec')
   }
@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
 
  }
  loginMethod(){
+   console.log('clicking logins')
+   console.log(this.userEmail, this.userPassword)
   this.afAuth.signInWithEmailAndPassword(this.userEmail, this.userPassword).catch(function(error){
       console.log(error.code, error.message);
       console.log('logged In using log in method.')

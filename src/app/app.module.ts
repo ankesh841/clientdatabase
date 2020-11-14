@@ -66,6 +66,7 @@ const routes: Routes = [
   {path:'', component:LandingPageComponent},
   { path: 'landingPage', component: LandingPageComponent },
   { path: 'addClient', component: AddClientComponent },
+  {path: 'login', component:LoginComponent}
   
 ];
 

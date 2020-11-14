@@ -60,12 +60,9 @@
                 >Home <span class="sr-only">(current)</span></a
               >
             </li>
-
-            <!-- <li class=
-              "nav-item" [hidden]="login"> -->
-            <!-- <a class="nav-link">logOut</a> -->
-            <!-- <button mat-raised-button (click)="logOut()">Log Out</button> -->
-            <!-- </li> -->
+            <li class="nav-item" *ngIf="login">
+              <button mat-raised-button (click)="logOut()">Log Out</button>
+            </li>
           </ul>
         </div>
       </nav>
