@@ -1,25 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
-
 // import {MatInput, MatInputModule} from '@angular/material/input';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
-
-
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 
 import { Routes, RouterModule } from '@angular/router'; // CLI imports router
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 import { FormsModule } from '@angular/forms';
@@ -28,6 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 
   import {MatNativeDateModule} from'@angular/material/core';
+  import {MatTableModule} from '@angular/material/table';
+
 
 // MatNativeDateModule 
 
@@ -59,6 +54,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { SearchComponent } from './search/search.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 firebase.default.initializeApp(environment.firebase)
@@ -66,7 +63,8 @@ const routes: Routes = [
   {path:'', component:LandingPageComponent},
   { path: 'landingPage', component: LandingPageComponent },
   { path: 'addClient', component: AddClientComponent },
-  {path: 'login', component:LoginComponent}
+  {path: 'login', component:LoginComponent},
+  {path: 'search', component:SearchComponent}
   
 ];
 
@@ -75,13 +73,17 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     LandingPageComponent,
-    AddClientComponent
+    AddClientComponent,
+    SearchComponent
   ],
   imports: [
+    MatDialogModule,
+    MatTableModule,
     MatListModule,
     // AngularFireStorage,
     MatSidenavModule,
     // AngularFireModule,
+    HttpClientModule,
     MatSnackBarModule,
     MatCheckboxModule,
     MatExpansionModule,
@@ -102,7 +104,8 @@ MatCardModule,
 MatDatepickerModule,
     FormsModule,
     MatFormFieldModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   exports:[MatFormFieldModule, MatInputModule , RouterModule],
   providers: [],

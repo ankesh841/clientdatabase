@@ -12,8 +12,10 @@ export class LandingPageComponent implements OnInit {
 
   constructor(private afAuth:AngularFireAuth) {    
     this.afAuth.authState.subscribe(res =>{
-      this.userEmail = res.email;
-    });
+      if(res){
+        this.userEmail = res.email;
+      }
+         });
   }
 
   storageRef;
@@ -22,13 +24,6 @@ export class LandingPageComponent implements OnInit {
       const file = event.target.files[0];
       var uploadingFileName = "";
       (file.name)?uploadingFileName=file.name:uploadingFileName=Math.floor(100000 + Math.random() * 900000)+"";
-      // if(file.name){   
-      //   uploadingFileName = file.name;
-      // }
-      // else{
-      //   uploadingFileName = Math.floor(100000 + Math.random() * 900000)+'';
-      // }
-
 
 this.storageRef = firebase.default.storage().ref();
 this.storageRef.child('users/'+this.userEmail).child(uploadingFileName).put(file).then(function(snapshot) {
@@ -43,7 +38,7 @@ this.storageRef.child('users/'+this.userEmail).child(uploadingFileName).put(file
 
   showAllFiles(){
 
-    var todownload  = firebase.default.storage().ref('users/ankesh.gupta97@gmail.com/');
+    var todownload  = firebase.default.storage().ref('users/'+this.userEmail+'/');
       todownload.listAll().then(function(result){
         result.items.forEach(function(imageRef) {
           // And finally display them

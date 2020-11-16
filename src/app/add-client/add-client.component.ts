@@ -2,6 +2,7 @@ import { Component, defineInjectable, OnInit } from '@angular/core';
 import { FormBuilder, NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import * as jquery from 'jquery';
 
 import {AngularFireAuth} from '@angular/fire/auth';
 
@@ -237,7 +238,8 @@ sendData(){
 
 
 
-   this.firebaseRef.ref("data/").push({
+   this.firebaseRef.ref().push({
+     clientDob:this.clientDOB,
 
       applicationType:this.applicationType,
       fileStatus:this.fileStatus,
@@ -299,6 +301,15 @@ sendData(){
 
       });
 
+
+}
+
+
+checkPhone(){
+        var filter = /^\d*(?:\.\d{1,2})?$/; //checking only numbers
+        if(!filter.test(this.phoneNumberClient)){
+          this.phoneNumberClient='';  
+        }
 
 }
 

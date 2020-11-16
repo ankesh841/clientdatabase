@@ -282,11 +282,13 @@
               <mat-label>Telephone</mat-label>
               <span matPrefix>+1 &nbsp;</span>
               <input
+                maxlength="10"
                 type="tel"
                 matInput
                 placeholder="555-555-1234"
                 [(ngModel)]="phoneNumberClient"
                 formControlName="phonenumberclientt"
+                (keypress)="checkPhone()"
                 required
               />
               <mat-icon matSuffix>edit</mat-icon>

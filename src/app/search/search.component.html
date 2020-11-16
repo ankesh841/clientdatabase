@@ -1,0 +1,179 @@
+<div class="container">
+  <div class="display-4 text-center" style="font-size: 3em">
+    <span style="text-decoration: underline"> Search</span>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-md-4">
+      <mat-form-field class="width_" appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          placeholder="First Name"
+          [(ngModel)]="firstName_search"
+          name="first"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field class="width_" appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          placeholder="First Name"
+          [(ngModel)]="lastName_search"
+          name="last"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field class="width_" appearance="outline">
+        <mat-label>Office File No.</mat-label>
+        <input
+          matInput
+          placeholder="Office Filie No."
+          [(ngModel)]="officeFile_search"
+          name="lastf"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field appearance="outline" class="width_">
+        <mat-label>Select Title</mat-label>
+        <mat-select>
+          <mat-option>ankesh</mat-option>
+          
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4">
+      <mat-form-field appearance="outline" class="width_">
+        <mat-label>File Status</mat-label>
+        <mat-select>
+          <mat-option>ankesh</mat-option>
+          
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4">
+      <mat-form-field appearance="outline" class="width_">
+        <mat-label>Office</mat-label>
+        <mat-select>
+          <mat-option>ankesh</mat-option>
+          
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div> -->
+
+  <div class="row mt-4">
+    <div class="col-md-7 ml-auto">
+      <mat-form-field class="width_" appearance="outline">
+        <mat-label>Search Text</mat-label>
+        <input
+          matInput
+          placeholder="search anything"
+          [(ngModel)]="search_main"
+          name="lastdsff"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <button
+        (click)="searchSubmit()"
+        mat-raised-button
+        color="primary"
+        style="width: 50%; height: 55px"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- <mat-form-field appearance="outline">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="First Name" [(ngModel)]="firstName_search" name="first">
+</mat-form-field> -->
+
+  <!-- showing Result -->
+  <div *ngIf="showResult">
+    <mat-divider class="my-3"> </mat-divider>
+    <p class="display-4 text-center" style="font-size: 2.5em">Results</p>
+    <table class="shadow">
+      <tr>
+        <th>Select</th>
+        <th>Office File Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>DOB</th>
+        <th>Address</th>
+      </tr>
+
+      <ng-container *ngFor="let item of searchData; let i = index">
+        <tr *ngFor="let it of item">
+          <td>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="openClientInfo(it.objectID)"
+            >
+              Select
+            </button>
+          </td>
+          <td>
+            {{ it.officeFileNo }}
+          </td>
+          <td>
+            {{ it.firstName }}
+          </td>
+          <td>
+            {{ it.lastName }}
+          </td>
+          <td>{{ it.whichGender }}</td>
+          <td>{{ it.clientDob }}</td>
+          <td>{{ it.addressOne }}</td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+  <!-- result div -->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">google</div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Save
+      </button>
+    </div>
+  </ng-template>
+
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+    Launch demo modal
+  </button>
+
+  <hr />
+
+  <pre>{{ closeResult }}</pre>
+  <!-- end -->
+</div>
