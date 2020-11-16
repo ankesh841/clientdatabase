@@ -76,7 +76,9 @@ export class AddClientComponent implements OnInit {
       dj:['', Validators.nullValidator],
       inp:['', Validators.nullValidator],
       inputOffice1:['', Validators.nullValidator],
-      memoInputdf:['', Validators.nullValidator]
+      memoInputdf:['', Validators.nullValidator],
+      cfflientgstassfa_:['', Validators.required]
+
     });
 
 
@@ -380,7 +382,7 @@ isMailingAddressSame(event){
       this.registerForm.controls['namdfse2'].disable();
       this.registerForm.controls['namdfsesadf2'].disable();
       this.registerForm.controls['spousedateofbirthd_'].disable();
-      this.registerForm.controls['cfflientgstassfa'].disable();
+      this.registerForm.controls['cfflientgstassfa_'].disable();
   
         this.spouseTitle = '';
         this.spouseFirstName = '';

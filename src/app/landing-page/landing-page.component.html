@@ -77,7 +77,7 @@
   <!-- <div class="card"> -->
   <div class="row">
     <div class="col-md-4 col-sm-4">
-      <div class="card">
+      <div class="card pb-4">
         <div class="card-body">
           <a [routerLink]="['/addClient']"
             ><img
@@ -91,7 +91,7 @@
     </div>
 
     <div class="col-md-4 col-sm-4">
-      <div class="card">
+      <div class="card pb-4">
         <div class="card-body">
           <a [routerLink]="['/search']">
             <img class="iconDefaultDimensions" src="../../assets/search.png" />
@@ -103,7 +103,7 @@
     </div>
 
     <div class="col-md-4 col-sm-4">
-      <div class="card">
+      <div class="card pb-4">
         <div class="card-body">
           <img class="iconDefaultDimensions" src="../../assets/upgrade.png" />
         </div>
@@ -114,15 +114,35 @@
   </div>
 
   <div class="row mt-3 pl">
-    <div class="col-md-4">
+    <div class="col-md-8">
       <div class="card">
         <div class="card-body">
-          <img
-            style="height: 80px; width: 120px"
-            src="../../assets/storage.png"
-          />
+          <div class="img-upload">
+            <label for="file-input">
+              <img
+                style="height: 80px; width: 120px"
+                src="../../assets/storage.png"
+              />
+            </label>
+
+            <input id="file-input" type="file" (change)="upload($event)" />
+          </div>
         </div>
+
+        File: {{ uploadingFileNameDisplay }}
+        <br />
         File Storage
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4">
+      <div class="card pb-4">
+        <div class="card-body">
+          <a [routerLink]="['/search']">
+            <img class="iconDefaultDimensions" src="../../assets/notes.png" />
+          </a>
+        </div>
+        Add Notes
       </div>
     </div>
   </div>
@@ -132,7 +152,7 @@
 <!--  -->
 
 <label for="file">File:</label>
-<input type="file" (change)="upload($event)" accept=".png,.jpg" />
+<!-- <input type="file" (change)="upload($event)" accept=".png,.jpg" /> -->
 
 <button mat-raised-button (click)="showAllFiles()">list files</button>
 <!-- <label for="file">File:</label>

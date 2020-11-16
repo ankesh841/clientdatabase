@@ -19,20 +19,23 @@ export class LandingPageComponent implements OnInit {
   }
 
   storageRef;
+  uploadingFileNameDisplay= ""
 
   upload(event) {   
+    
       const file = event.target.files[0];
       var uploadingFileName = "";
       (file.name)?uploadingFileName=file.name:uploadingFileName=Math.floor(100000 + Math.random() * 900000)+"";
+    this.uploadingFileNameDisplay=uploadingFileName;
 
-this.storageRef = firebase.default.storage().ref();
-this.storageRef.child('users/'+this.userEmail).child(uploadingFileName).put(file).then(function(snapshot) {
+      console.log(uploadingFileName)
+// this.storageRef = firebase.default.storage().ref();
+// this.storageRef.child('users/'+this.userEmail).child(uploadingFileName).put(file).then(function(snapshot) {
 
-  console.log(snapshot)
-  console.log('Uploaded a file!');
+//   console.log(snapshot)
+//   console.log('Uploaded a file!');
 
-
-    });
+//     });
   }
 
 
