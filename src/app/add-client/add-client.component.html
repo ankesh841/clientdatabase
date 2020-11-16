@@ -76,13 +76,12 @@
           <div class="col-md-6">
             <mat-form-field class="width_">
               <mat-label>Office File No.</mat-label>
+
               <input
                 matInput
                 placeholder="Required"
                 [(ngModel)]="officeFileNo"
-                disabled
                 formControlName="inputOffice"
-                readonly
               />
             </mat-form-field>
           </div>
@@ -103,7 +102,11 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Select Title</mat-label>
-              <mat-select>
+              <mat-select
+                required
+                [(ngModel)]="generalClientInfoTitle"
+                formControlName="titleGeneralClient"
+              >
                 <mat-option *ngFor="let item of selectTitle" value="{{ item }}"
                   >{{ item }}
                 </mat-option>
@@ -336,7 +339,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address #2</mat-label>
               <textarea
@@ -345,7 +348,7 @@
                 formControlName="memoInputdf"
               ></textarea>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div class="col-md-4">
             <mat-form-field class="width_">
@@ -358,10 +361,7 @@
               />
             </mat-form-field>
           </div>
-        </div>
 
-        <!-- second row -->
-        <div class="row">
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>State</mat-label>
@@ -376,8 +376,11 @@
               </mat-select>
             </mat-form-field>
           </div>
+        </div>
 
-          <div class="col-md-4">
+        <!-- second row -->
+        <div class="row">
+          <div class="col-md-6">
             <mat-form-field class="width_">
               <mat-label>Postal Code</mat-label>
               <input
@@ -390,7 +393,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Country</mat-label>
               <mat-select
@@ -427,7 +430,6 @@
             <mat-form-field class="width_">
               <mat-label>Address #1</mat-label>
               <textarea
-                [attr.disabled]="isMailingAddressSameBoolean"
                 matInput
                 [(ngModel)]="addressOneMailing"
                 formControlName="addsrsdae"
@@ -435,7 +437,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>Address #2</mat-label>
               <textarea
@@ -445,28 +447,23 @@
                 formControlName="memofInputdf"
               ></textarea>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div class="col-md-4">
             <mat-form-field class="width_">
               <mat-label>City</mat-label>
               <input
-                [attr.disabled]="isMailingAddressSameBoolean"
                 matInput
                 [(ngModel)]="cityMailing"
                 formControlName="cightyl"
               />
             </mat-form-field>
           </div>
-        </div>
 
-        <!-- second row -->
-        <div class="row">
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>State</mat-label>
               <mat-select
-                [attr.disabled]="isMailingAddressSameBoolean"
                 [(ngModel)]="stateMailing"
                 formControlName="cfliefntstassa"
               >
@@ -476,12 +473,14 @@
               </mat-select>
             </mat-form-field>
           </div>
+        </div>
 
-          <div class="col-md-4">
+        <!-- second row -->
+        <div class="row">
+          <div class="col-md-6">
             <mat-form-field class="width_">
               <mat-label>Postal Code</mat-label>
               <input
-                [attr.disabled]="isMailingAddressSameBoolean"
                 matInput
                 [(ngModel)]="postalCodeMailing"
                 formControlName="memoInpfutdf"
@@ -490,11 +489,10 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Country</mat-label>
               <mat-select
-                [attr.disabled]="isMailingAddressSameBoolean"
                 [(ngModel)]="countryMailing"
                 formControlName="cfflientgstassa"
               >
@@ -584,9 +582,9 @@
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Select Title</mat-label>
               <mat-select
-                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 [(ngModel)]="spouseTitle"
                 formControlName="dj"
+                required
               >
                 <mat-option *ngFor="let item of selectTitle" value="{{ item }}"
                   >{{ item }}
@@ -600,7 +598,6 @@
               <mat-label>First Name</mat-label>
               <input
                 matInput
-                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 [(ngModel)]="spouseFirstName"
                 formControlName="nasdame2"
               />
@@ -612,7 +609,6 @@
               <mat-label>Middle Name</mat-label>
               <input
                 matInput
-                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 [(ngModel)]="spouseMiddleName"
                 formControlName="namdfse2"
               />
@@ -627,7 +623,6 @@
               <mat-label>Last Name</mat-label>
               <input
                 matInput
-                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 [(ngModel)]="spouseLastName"
                 formControlName="namdfsesadf2"
               />
@@ -640,7 +635,6 @@
               <input
                 [(ngModel)]="spousedateOfBirth"
                 formControlName="spousedateofbirthd_"
-                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 matInput
                 [min]="minDate"
                 [max]="maxDate"
@@ -658,7 +652,6 @@
             <mat-form-field appearance="outline" class="width_">
               <mat-label>Education</mat-label>
               <mat-select
-                [attr.disabled]="checkingmaritalStatusBoolean ? '' : ''"
                 [(ngModel)]="spouseEducation"
                 formControlName="cfflientgstassfa"
               >
@@ -720,10 +713,12 @@
               <mat-label>Telephone</mat-label>
               <span matPrefix>+1 &nbsp;</span>
               <input
+                maxlength="10"
                 type="tel"
                 matInput
                 placeholder="555-555-1234"
                 [(ngModel)]="sponsorPhone"
+                (keypress)="checkPhone()"
                 formControlName="sdlfkjsa"
               />
               <mat-icon matSuffix>edit</mat-icon>
@@ -797,8 +792,10 @@
               <span matPrefix>+1 &nbsp;</span>
               <input
                 type="tel"
+                maxlength="10"
                 matInput
                 placeholder="555-555-1234"
+                (keypress)="checkPhone()"
                 [(ngModel)]="sponsorSpousePhone"
                 formControlName="sdlfkjsasaf"
               />

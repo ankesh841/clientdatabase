@@ -9,6 +9,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { SplitInterpolation } from '@angular/compiler';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileWatcherEventKind } from 'typescript';
 
 
 @Component({
@@ -22,15 +23,18 @@ export class AddClientComponent implements OnInit {
   submitted = false;
  
   ngOnInit(): void {
+
+    
   
+    
     this.registerForm = this.formBuilder.group({
       secondSelect: ['', Validators.required],
       // inp: ['', Validators.required],
       first:['', Validators.required],
 
-      inputOffice:new FormControl(),
+      inputOffice:['',Validators.required],
       // inputOffice1:['', Validators.required],
-
+      titleGeneralClient:['',Validators.required],
       name2:['', Validators.required],
       name2q:['', Validators.required],
       clientsta:['', Validators.required],
@@ -42,7 +46,6 @@ export class AddClientComponent implements OnInit {
       addsre:['', Validators.required],
       cihtyl:['', Validators.required],
       cflientstassa:['', Validators.required],
-      // memoInputdf:['', Validators.required],
       cfflientstassa:['', Validators.required],
       addsrsdae:['', Validators.required],
       cightyl:['', Validators.required],
@@ -68,7 +71,7 @@ export class AddClientComponent implements OnInit {
       nasddsdfame2:['', Validators.nullValidator],
       adddfasadsre:['', Validators.nullValidator],
       sdlfkjsasaf:['', Validators.nullValidator],
-      memofInputdf:['', Validators.nullValidator],
+      // memofInputdf:['', Validators.nullValidator],
       namdfse2:['', Validators.nullValidator],
       dj:['', Validators.nullValidator],
       inp:['', Validators.nullValidator],
@@ -76,10 +79,14 @@ export class AddClientComponent implements OnInit {
       memoInputdf:['', Validators.nullValidator]
     });
 
+
 //   this.registerForm = new FormGroup({
 //     memoInput: new FormControl(),
 //     secondSelect:new FormControl()
 //  });
+
+
+
 
   }
 
@@ -169,26 +176,26 @@ export class AddClientComponent implements OnInit {
   whichCountry:string;
 
   addressOne:string;
-  addressTwo:string;
+  // addressTwo:string;
   city:string;
   postalCode:string;
   // mailing
   addressOneMailing:string;
-  addressTwoMailing:string;
+  // addressTwoMailing:string;
   cityMailing:string;
   postalCodeMailing:string;
   countryMailing:string;
   stateMailing:string
 // 
   occupation:string;
-  education:string;
+  education = '';
 
   maritalStatus:string;
   spouseTitle:string;
   spouseFirstName:string;
   spouseLastName:string;
   spouseMiddleName:string;
-  spouseEducation:string;
+  spouseEducation = '';
   sponsorTitle:string;
 
   spousedateOfBirth:string;
@@ -205,6 +212,9 @@ export class AddClientComponent implements OnInit {
 
   clientDOB:string;
   phoneNumberClient
+
+
+  generalClientInfoTitle:string;
 
   currentDate;
   minDate: Date;
@@ -264,12 +274,12 @@ sendData(){
       whichCountry:this.whichCountry,
     
       addressOne:this.addressOne,
-      addressTwo:(this.addressTwo)?this.addressTwo:"NA",
+      // addressTwo:(this.addressTwo)?this.addressTwo:"NA",
       city:this.city,
       postalCode:this.postalCode,
       // mailing
       addressOneMailing:this.addressOneMailing,
-      addressTwoMailing:this.addressTwoMailing,
+      // addressTwoMailing:this.addressTwoMailing,
       cityMailing:this.cityMailing,
       postalCodeMailing:this.postalCodeMailing,
       countryMailing:this.countryMailing,
@@ -306,9 +316,12 @@ sendData(){
 
 
 checkPhone(){
+  console.log('call')
         var filter = /^\d*(?:\.\d{1,2})?$/; //checking only numbers
-        if(!filter.test(this.phoneNumberClient)){
+        if(!filter.test(this.phoneNumberClient)|| !filter.test(this.sponsorPhone) ||!filter.test(this.sponsorSpousePhone) ){
           this.phoneNumberClient='';  
+          this.sponsorPhone='';
+          this.sponsorSpousePhone ='';
         }
 
 }
@@ -319,6 +332,8 @@ selectedApplicationType(){
   this.officeFileNo = this.applicationType
   var initialCharacter =string.match(/\b(\w)/g).toString().replace(/,/g, '');  
   var currentDate = new Date();
+
+  
   // console.log(initialCharacter)
   // console.log(currentDate.getFullYear()%100)
   // console.log(currentDate.getMonth())
@@ -327,52 +342,75 @@ selectedApplicationType(){
 
   var newFileNumber = initialCharacter+""+currentDate.getFullYear()%100+currentDate.getMonth()+currentDate.getDay()+Math.random().toFixed(4).substring(2, 6);
   this.officeFileNo = newFileNumber;
+    this.registerForm.get('inputOffice').disable();  
   }
 
 
 isMailingAddressSameBoolean:boolean;
 
-
-  isMailingAddressSame(event){
+isMailingAddressSame(event){
     if(event.checked){
-    this.isMailingAddressSameBoolean = true;
-
-        this.addressOneMailing = this.addressOne;
-        this.addressTwoMailing  = this.addressTwo;
-        this.cityMailing = this.city;
-        this.stateMailing = this.whichState;
-        this.postalCodeMailing  = this.postalCode;
-        this.countryMailing = this.whichCountry;
-
-
-
-  }
-    else{
-      this.isMailingAddressSameBoolean = false;
-    }
-
-  }
-
-
-  checkingmaritalStatusBoolean:boolean;
-  
-  checkMaritalStatus(event){  
-    console.log(event.value)
-    if(event.value === "Single"){
-      this.checkingmaritalStatusBoolean = true;
-
+      this.registerForm.controls['addsrsdae'].disable();
+      this.registerForm.controls['cightyl'].disable();
+      this.registerForm.controls['cfliefntstassa'].disable();
+      this.registerForm.controls['memoInpfutdf'].disable();
+      this.registerForm.controls['cfflientgstassa'].disable();
     
-      this.spouseTitle = '';
-      this.spouseFirstName = '';
-      this.spouseMiddleName = '';
-      this.spouseLastName = '';
-      this.spousedateOfBirth = '';
-      // this.spouseEducation = '';
+      this.addressOneMailing = this.addressOne;
+      this.cityMailing = this.city;
+      this.stateMailing = this.whichState;
+      this.postalCodeMailing  = this.postalCode;
+      this.countryMailing = this.whichCountry;
+  }
+    else{
+      this.registerForm.controls['addsrsdae'].enable();
+      this.registerForm.controls['cightyl'].enable();
+      this.registerForm.controls['cfliefntstassa'].enable();
+      this.registerForm.controls['memoInpfutdf'].enable();
+      this.registerForm.controls['cfflientgstassa'].enable();
+    }
+
+  }
+
+  
+  checkMaritalStatus(event){   
+    if(event.value==='Single'){    
+      this.registerForm.controls['dj'].disable();
+      this.registerForm.controls['nasdame2'].disable();
+      this.registerForm.controls['namdfse2'].disable();
+      this.registerForm.controls['namdfsesadf2'].disable();
+      this.registerForm.controls['spousedateofbirthd_'].disable();
+      this.registerForm.controls['cfflientgstassfa'].disable();
+  
+        this.spouseTitle = '';
+        this.spouseFirstName = '';
+        this.spouseMiddleName = '';
+        this.spouseLastName = '';
+        this.spousedateOfBirth = '';
+        this.spouseEducation = '';
+
 
     }
     else{
-      this.checkingmaritalStatusBoolean = false;
-    }   
+
+      this.registerForm.controls['dj'].enable();
+      this.registerForm.controls['nasdame2'].enable();
+      this.registerForm.controls['namdfse2'].enable();
+      this.registerForm.controls['namdfsesadf2'].enable();
+      this.registerForm.controls['spousedateofbirthd_'].enable();
+      this.registerForm.controls['cfflientgstassfa'].enable();
+  
+    }
+
+   
+
+
+
+
+
+
+
+
   }
 
 
@@ -384,11 +422,11 @@ isMailingAddressSameBoolean:boolean;
   }
 
 logOut(){
-  console.log('clicking')
+  // console.log('clicking')
     this.afAuth.signOut().then(function(){
-      console.log('sign out sucesfful')
+      // console.log('sign out sucesfful')
     }).catch(function(error){
-      console.log(error)
+      // console.log(error)
     })
 }
 
