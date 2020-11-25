@@ -679,6 +679,7 @@
                 matInput
                 [(ngModel)]="sponsorFirstName"
                 formControlName="nasdfsame2"
+                required
               />
             </mat-form-field>
           </div>
@@ -690,6 +691,7 @@
                 matInput
                 [(ngModel)]="sponsorLastName"
                 formControlName="nasddsame2"
+                required
               />
             </mat-form-field>
           </div>
@@ -701,6 +703,7 @@
                 matInput
                 [(ngModel)]="sponsorAddress"
                 formControlName="adddasre"
+                required
               ></textarea>
             </mat-form-field>
           </div>
@@ -720,6 +723,7 @@
                 [(ngModel)]="sponsorPhone"
                 (keypress)="checkPhone()"
                 formControlName="sdlfkjsa"
+                required
               />
               <mat-icon matSuffix>edit</mat-icon>
             </mat-form-field>
@@ -733,6 +737,7 @@
                 [min]="minDate"
                 [max]="maxDate"
                 [matDatepicker]="sponsorPicker_2"
+                required
               />
               <mat-datepicker-toggle
                 matSuffix

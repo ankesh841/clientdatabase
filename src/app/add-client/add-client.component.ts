@@ -96,19 +96,13 @@ export class AddClientComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    // stop here if form is invalid
     if (this.registerForm.invalid) {
-
       this.openSnackBar("Input Error", "Close");
-      
       return;
     }
     else{
       this.sendData();
     }
-    
-    // display form values on success
-    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
     alert('successfully added')
   }
 
@@ -142,7 +136,6 @@ export class AddClientComponent implements OnInit {
 
   
   title = 'clientDatabase';
-
   applicationTypeArray = ['Visitor Visa', 'Visitor Extension','Super Visa', 'Spousal Sponsorship', 'ATIP', 'Study Visa', 'Work Visa', 'Express Entry', 'Canadian Experience', 'BC PNP', 'Self Employed', 'Care Giver', 'Investor Class', 'LMIA', 'Appeal', 'H&C', 'Judicial Class', 'Refugee Program', 'Family Sponsorship', 'Citizenship', 'Misc', 'PRCard Renewal'];
   fileStatusArray = ['Active', 'Inactive'];
   selectTitle = ['Mr.', 'Ms.', 'Mrs.']; 
@@ -256,13 +249,9 @@ sendData(){
       applicationType:this.applicationType,
       fileStatus:this.fileStatus,
       memo:this.memo,
-//optional
       embassyFileNo:(this.embassyFileNo)?this.embassyFileNo:"NA",
-
       officeFileNo:this.officeFileNo,
-
       EmbassyFileNo1:(this.EmbassyFileNo1)?this.EmbassyFileNo1:"NA",
-      
       firstName:this.firstName,
       caseProcessName:(this.caseProcessName)?this.caseProcessName:"NA",
       middleName:(this.middleName)?this.middleName:"NA",
@@ -274,7 +263,6 @@ sendData(){
       whichNational:this.whichNational,
       whichState:this.whichState,
       whichCountry:this.whichCountry,
-    
       addressOne:this.addressOne,
       // addressTwo:(this.addressTwo)?this.addressTwo:"NA",
       city:this.city,
@@ -289,7 +277,6 @@ sendData(){
     // 
       occupation:this.occupation,
       education:this.education,
-    
       maritalStatus:this.maritalStatus,
       spouseTitle:(this.spouseTitle)?this.spouseTitle:"NA",
       spouseFirstName:(this.spouseFirstName)?this.spouseFirstName:"NA",
@@ -297,18 +284,16 @@ sendData(){
       spouseMiddleName:(this.spouseMiddleName)?this.spouseMiddleName:"NA",
       spouseEducation:(this.spouseEducation)?this.spouseEducation:"NA",
  
-      sponsorTitle:(this.sponsorTitle)?this.sponsorTitle:" ",
-    
+      sponsorTitle:(this.sponsorTitle)?this.sponsorTitle:"NA",
       sponsorFirstName:this.sponsorFirstName,
       sponsorLastName:this.sponsorLastName,
       sponsorAddress:this.sponsorAddress,
       sponsorPhone:this.sponsorPhone,
     
-      sponsorSpouseFirstName:this.sponsorSpouseFirstName,
-      sponsorSpouseLastName:this.sponsorSpouseLastName,
-
-      sponsorSpouseAddress:this.sponsorSpouseAddress,
-      sponsorSpousePhone:this.sponsorSpousePhone
+      sponsorSpouseFirstName:(this.sponsorSpouseFirstName)?this.sponsorSpouseFirstName:"NA",
+      sponsorSpouseLastName:(this.sponsorSpouseLastName)?this.sponsorSpouseLastName:"NA",
+      sponsorSpouseAddress:(this.sponsorSpouseAddress)?this.sponsorSpouseAddress:"NA",
+      sponsorSpousePhone:(this.sponsorSpousePhone)?this.sponsorSpousePhone:"NA"
     
 
       });
@@ -376,7 +361,8 @@ isMailingAddressSame(event){
 
   
   checkMaritalStatus(event){   
-    if(event.value==='Single'){    
+    if(event.value==='Single'){
+
       this.registerForm.controls['dj'].disable();
       this.registerForm.controls['nasdame2'].disable();
       this.registerForm.controls['namdfse2'].disable();
@@ -400,7 +386,8 @@ isMailingAddressSame(event){
       this.registerForm.controls['namdfse2'].enable();
       this.registerForm.controls['namdfsesadf2'].enable();
       this.registerForm.controls['spousedateofbirthd_'].enable();
-      this.registerForm.controls['cfflientgstassfa'].enable();
+      // this.registerForm.controls['cfflientgstassfa'].enable();
+      this.registerForm.controls['cfflientgstassfa_'].enable();
   
     }
 

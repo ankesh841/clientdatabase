@@ -105,7 +105,9 @@
     <div class="col-md-4 col-sm-4">
       <div class="card pb-4">
         <div class="card-body">
-          <img class="iconDefaultDimensions" src="../../assets/upgrade.png" />
+          <a [routerLink]="['/search']">
+            <img class="iconDefaultDimensions" src="../../assets/upgrade.png" />
+          </a>
         </div>
 
         Update Records
@@ -151,10 +153,10 @@
 </div>
 <!--  -->
 
-<label for="file">File:</label>
+<!-- <label for="file">File:</label> -->
 <!-- <input type="file" (change)="upload($event)" accept=".png,.jpg" /> -->
 
-<button mat-raised-button (click)="showAllFiles()">list files</button>
+<!-- <button mat-raised-button (click)="showAllFiles()">list files</button> -->
 <!-- <label for="file">File:</label>
 <input type="file" (change)="upload($event)" accept=".png,.jpg" /> -->
 

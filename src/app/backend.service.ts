@@ -23,12 +23,15 @@ export class BackendService {
     })
   };
   private rootUrl = "http://localhost:3000";
+
+  // private rootUrl = "";
   
   
-  search(searchString){
+  search(searchString, searchIndex){
 
     var obj = {
-      searchVal:searchString
+      searchVal:searchString,
+      searchIndex:searchIndex
     } 
     
     return this.http.post(this.rootUrl + "/backEndSearch", obj, this.httpOptions);
