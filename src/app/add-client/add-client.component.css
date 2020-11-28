@@ -23,3 +23,11 @@ nav a {
 .navbar-light .navbar-nav .nav-link {
   color: white;
 }
+.card-header {
+  background-color: #343a40 !important;
+}
+.card-header {
+  color: white;
+  font-size: 1.2em;
+  font-weight: 200;
+}

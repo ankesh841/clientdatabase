@@ -27,3 +27,18 @@ tr:nth-child(even) {
   /* max-width: 600px !important; */
   width: 800px !important;
 }
+#displayingClientID .card-header {
+  background-color: #343a40 !important;
+  color: white;
+}
+
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 10000;
+}
+.cdk-overlay-pane {
+  z-index: 10000 !important;
+}
+* {
+  z-index: 10000;
+}

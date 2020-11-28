@@ -56,6 +56,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SearchComponent } from './search/search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 
 firebase.default.initializeApp(environment.firebase)
@@ -79,6 +81,7 @@ const routes: Routes = [
   imports: [
     MatDialogModule,
     MatTableModule,
+    MatProgressBarModule,
     MatListModule,
     // AngularFireStorage,
     MatSidenavModule,

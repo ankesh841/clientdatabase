@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class AppComponent {
   login:boolean;
   
 
-  constructor(private breakpointObserver: BreakpointObserver, private afAuth:AngularFireAuth){
+  constructor(private breakpointObserver: BreakpointObserver, private afAuth:AngularFireAuth, private changeDetector:ChangeDetectorRef){
 
     this.afAuth.authState.subscribe((res) => {
       if (res) {
@@ -38,6 +38,8 @@ export class AppComponent {
 
   logOut(){
     this.afAuth.signOut();
+      this.login=false;
+     this.changeDetector.detectChanges();
   }
 
 }

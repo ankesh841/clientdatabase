@@ -10,6 +10,7 @@ import * as firebase from 'firebase';
 import { SplitInterpolation } from '@angular/compiler';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileWatcherEventKind } from 'typescript';
+import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 
 
 @Component({
@@ -22,9 +23,20 @@ export class AddClientComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
  
+  user;
   ngOnInit(): void {
 
-    
+    this.afAuth.authState.subscribe((res)=>{
+      if(res){
+        this.login = false;
+        this.user =res.email;
+        console.log('user is logged in ')
+      }
+      else{
+        this.login = true;
+        console.log('showing login interface.')
+  }
+  })
   
     
     this.registerForm = this.formBuilder.group({
@@ -34,10 +46,10 @@ export class AddClientComponent implements OnInit {
 
       inputOffice:['',Validators.required],
       // inputOffice1:['', Validators.required],
-      titleGeneralClient:['',Validators.required],
+      // titleGeneralClient:['',Validators.required],
       name2:['', Validators.required],
-      name2q:['', Validators.required],
-      clientsta:['', Validators.required],
+      // name2q:['', Validators.required],
+      clientsta:['', Validators.nullValidator],
       name2s:['', Validators.required],
       gende:['', Validators.required],
       clientDOB1:['', Validators.required],
@@ -90,11 +102,14 @@ export class AddClientComponent implements OnInit {
 
 
 
+
   }
 
+  showProgressbar:boolean;
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
+    this.showProgressbar=true;
     this.submitted = true;
     if (this.registerForm.invalid) {
       this.openSnackBar("Input Error", "Close");
@@ -102,8 +117,13 @@ export class AddClientComponent implements OnInit {
     }
     else{
       this.sendData();
+      this.showProgressbar=false;
+  this.registerForm.reset();
+
+  
     }
     alert('successfully added')
+
   }
 
   onReset(){
@@ -120,16 +140,7 @@ export class AddClientComponent implements OnInit {
     this.minDate = new Date(currentYear - 80, 0, 1);
     this.currentDate = new Date();
      this.maxDate = this.currentDate;
-  this.afAuth.authState.subscribe((res)=>{
-      if(res){
-        this.login = false;
-        console.log('user is logged in ')
-      }
-      else{
-        this.login = true;
-        console.log('showing login interface.')
-  }
-  })
+
   }
   
   
@@ -146,7 +157,7 @@ export class AddClientComponent implements OnInit {
 
   stateArray=['Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon Territory']; 
 
-  countryArray = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+  countryArray = ["America","Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Canada","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
 
   occupationArray=['Student', 'Employed', 'Un-Employed', 'Other'];
   educationArray=['Diploma', 'Post-Graduate', 'Under-Graduate', 'High-School'];
@@ -155,14 +166,14 @@ export class AddClientComponent implements OnInit {
   applicationType:string;
   fileStatus:string;
   memo:string;
-  embassyFileNo:string;
+  // embassyFileNo:string;
   officeFileNo:string;
   EmbassyFileNo1:string;
   firstName:string;
-  caseProcessName:string;
+  // caseProcessName:string;
   middleName:string;
   lastName:string;
-  clientStatus:string;
+  // clientStatus:string;
   otherName:string;
   whichOffice:string;
   whichGender:string;
@@ -209,7 +220,7 @@ export class AddClientComponent implements OnInit {
   phoneNumberClient
 
 
-  generalClientInfoTitle:string;
+  // generalClientInfoTitle:string;
 
   currentDate;
   minDate: Date;
@@ -249,16 +260,16 @@ sendData(){
       applicationType:this.applicationType,
       fileStatus:this.fileStatus,
       memo:this.memo,
-      embassyFileNo:(this.embassyFileNo)?this.embassyFileNo:"NA",
+      // embassyFileNo:(this.embassyFileNo)?this.embassyFileNo:"NA",
       officeFileNo:this.officeFileNo,
       EmbassyFileNo1:(this.EmbassyFileNo1)?this.EmbassyFileNo1:"NA",
       firstName:this.firstName,
-      caseProcessName:(this.caseProcessName)?this.caseProcessName:"NA",
+      // caseProcessName:(this.caseProcessName)?this.caseProcessName:"NA",
       middleName:(this.middleName)?this.middleName:"NA",
       lastName:this.lastName,
-      clientStatus:this.clientStatus,
+      // clientStatus:this.clientStatus,
       otherName:(this.otherName)?this.otherName:"NA",
-      whichOffice:this.whichOffice,
+      whichOffice:(this.whichOffice)?this.whichOffice:"NA",
       whichGender:this.whichGender,
       whichNational:this.whichNational,
       whichState:this.whichState,
@@ -278,6 +289,7 @@ sendData(){
       occupation:this.occupation,
       education:this.education,
       maritalStatus:this.maritalStatus,
+
       spouseTitle:(this.spouseTitle)?this.spouseTitle:"NA",
       spouseFirstName:(this.spouseFirstName)?this.spouseFirstName:"NA",
       spouseLastName:(this.spouseLastName)?this.spouseLastName:"NA",
@@ -285,15 +297,15 @@ sendData(){
       spouseEducation:(this.spouseEducation)?this.spouseEducation:"NA",
  
       sponsorTitle:(this.sponsorTitle)?this.sponsorTitle:"NA",
-      sponsorFirstName:this.sponsorFirstName,
-      sponsorLastName:this.sponsorLastName,
-      sponsorAddress:this.sponsorAddress,
-      sponsorPhone:this.sponsorPhone,
+      sponsorFirstName:(this.sponsorFirstName)?this.sponsorFirstName:"NA",
+      sponsorLastName:(this.sponsorLastName)?this.sponsorLastName:"NA",
+      sponsorAddress:(this.sponsorAddress)?this.sponsorAddress:"NA",
+      sponsorPhone:(this.sponsorPhone)?this.sponsorPhone:"NA"
     
-      sponsorSpouseFirstName:(this.sponsorSpouseFirstName)?this.sponsorSpouseFirstName:"NA",
-      sponsorSpouseLastName:(this.sponsorSpouseLastName)?this.sponsorSpouseLastName:"NA",
-      sponsorSpouseAddress:(this.sponsorSpouseAddress)?this.sponsorSpouseAddress:"NA",
-      sponsorSpousePhone:(this.sponsorSpousePhone)?this.sponsorSpousePhone:"NA"
+      // sponsorSpouseFirstName:(this.sponsorSpouseFirstName)?this.sponsorSpouseFirstName:"NA",
+      // sponsorSpouseLastName:(this.sponsorSpouseLastName)?this.sponsorSpouseLastName:"NA",
+      // sponsorSpouseAddress:(this.sponsorSpouseAddress)?this.sponsorSpouseAddress:"NA",
+      // sponsorSpousePhone:(this.sponsorSpousePhone)?this.sponsorSpousePhone:"NA"
     
 
       });
@@ -323,11 +335,13 @@ selectedApplicationType(){
   
   // console.log(initialCharacter)
   // console.log(currentDate.getFullYear()%100)
-  // console.log(currentDate.getMonth())
+
+  var month = currentDate.getMonth()+1;
+  
   // console.log(currentDate.getDay())
   // console.log(Math.random().toFixed(4).substring(2, 6))
 
-  var newFileNumber = initialCharacter+""+currentDate.getFullYear()%100+currentDate.getMonth()+currentDate.getDay()+Math.random().toFixed(4).substring(2, 6);
+  var newFileNumber = initialCharacter+""+currentDate.getFullYear()%100+month+currentDate.getDay()+Math.random().toFixed(4).substring(2, 3);
   this.officeFileNo = newFileNumber;
     this.registerForm.get('inputOffice').disable();  
   }

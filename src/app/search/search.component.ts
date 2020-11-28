@@ -17,6 +17,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import * as $ from 'jquery'
 import { FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import * as moment from 'moment';
+// import { CONNREFUSED } from 'dns';
 // import { copyFileSync } from 'fs';
 
 
@@ -68,7 +71,7 @@ export class SearchComponent implements OnInit {
   postalCodeMailing:string;
   countryMailing:string;
   stateMailing:string
-// 
+//
   occupation:string;
   education = '';
 
@@ -96,7 +99,24 @@ export class SearchComponent implements OnInit {
   phoneNumberClient
 
 
+  notes;
+  subject;
+
   generalClientInfoTitle:string;
+
+
+/////adding notes
+
+
+
+
+/////
+
+
+
+
+
+
 
   currentDate;
   minDate: Date;
@@ -110,13 +130,13 @@ export class SearchComponent implements OnInit {
   title = 'clientDatabase';
   applicationTypeArray = ['Visitor Visa', 'Visitor Extension','Super Visa', 'Spousal Sponsorship', 'ATIP', 'Study Visa', 'Work Visa', 'Express Entry', 'Canadian Experience', 'BC PNP', 'Self Employed', 'Care Giver', 'Investor Class', 'LMIA', 'Appeal', 'H&C', 'Judicial Class', 'Refugee Program', 'Family Sponsorship', 'Citizenship', 'Misc', 'PRCard Renewal'];
   fileStatusArray = ['Active', 'Inactive'];
-  selectTitle = ['Mr.', 'Ms.', 'Mrs.']; 
+  selectTitle = ['Mr.', 'Ms.', 'Mrs.'];
   officeArray  = ['Office A', 'office b' , 'office c'];
   genderArray = ['Male', 'Female', 'Other'];
-  
+
   nationalArray = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean', 'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi', 'Barbadian', 'Barbudans', 'Batswana', 'Belarusian', 'Belgian', 'Belizean', 'Beninese', 'Bhutanese', 'Bolivian', 'Bosnian', 'Brazilian', 'British', 'Bruneian', 'Bulgarian', 'Burkinabe', 'Burmese', 'Burundian', 'Cambodian', 'Cameroonian', 'Canadian', 'Cape Verdean', 'Central African', 'Chadian', 'Chilean', 'Chinese', 'Colombian', 'Comoran', 'Congolese', 'Costa Rican', 'Croatian', 'Cuban', 'Cypriot', 'Czech', 'Danish', 'Djibouti', 'Dominican', 'Dutch', 'East Timorese', 'Ecuadorean', 'Egyptian', 'Emirian', 'Equatorial Guinean', 'Eritrean', 'Estonian', 'Ethiopian', 'Fijian', 'Filipino', 'Finnish', 'French', 'Gabonese', 'Gambian', 'Georgian', 'German', 'Ghanaian', 'Greek', 'Grenadian', 'Guatemalan', 'Guinea-Bissauan', 'Guinean', 'Guyanese', 'Haitian', 'Herzegovinian', 'Honduran', 'Hungarian', 'I-Kiribati', 'Icelander', 'Indian', 'Indonesian', 'Iranian', 'Iraqi', 'Irish', 'Israeli', 'Italian', 'Ivorian', 'Jamaican', 'Japanese', 'Jordanian', 'Kazakhstani', 'Kenyan', 'Kittian and Nevisian', 'Kuwaiti', 'Kyrgyz', 'Laotian', 'Latvian', 'Lebanese', 'Liberian', 'Libyan', 'Liechtensteiner', 'Lithuanian', 'Luxembourger', 'Macedonian', 'Malagasy', 'Malawian', 'Malaysian', 'Maldivan', 'Malian', 'Maltese', 'Marshallese', 'Mauritanian', 'Mauritian', 'Mexican', 'Micronesian', 'Moldovan', 'Monacan', 'Mongolian', 'Moroccan', 'Mosotho', 'Motswana', 'Mozambican', 'Namibian', 'Nauruan', 'Nepalese', 'New Zealander', 'Nicaraguan', 'Nigerian', 'Nigerien', 'North Korean', 'Northern Irish', 'Norwegian', 'Omani', 'Pakistani', 'Palauan', 'Panamanian', 'Papua New Guinean', 'Paraguayan', 'Peruvian', 'Polish', 'Portuguese', 'Qatari', 'Romanian', 'Russian', 'Rwandan', 'Saint Lucian', 'Salvadoran', 'Samoan', 'San Marinese', 'Sao Tomean', 'Saudi', 'Scottish', 'Senegalese', 'Serbian', 'Seychellois', 'Sierra Leonean', 'Singaporean', 'Slovakian', 'Slovenian', 'Solomon Islander', 'Somali', 'South African', 'South Korean', 'Spanish', 'Sri Lankan', 'Sudanese', 'Surinamer', 'Swazi', 'Swedish', 'Swiss', 'Syrian', 'Taiwanese', 'Tajik', 'Tanzanian', 'Thai', 'Togolese', 'Tongan', 'Trinidadian/Tobagonian', 'Tunisian', 'Turkish', 'Tuvaluan', 'Ugandan', 'Ukrainian', 'Uruguayan', 'Uzbekistani', 'Venezuelan', 'Vietnamese', 'Welsh', 'Yemenite', 'Zambian', 'Zimbabwean'];
 
-  stateArray=['Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon Territory']; 
+  stateArray=['Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon Territory'];
 
   countryArray = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
 
@@ -132,8 +152,8 @@ export class SearchComponent implements OnInit {
 
   search_main = "";
   afDatabase: any;
-  constructor(private afAuth:AngularFireAuth, 
-     public formBuilder:FormBuilder, private backend:BackendService, public dialog: MatDialog, private modalService: NgbModal) {
+  constructor(private afAuth:AngularFireAuth,
+     public formBuilder:FormBuilder, private backend:BackendService,private _snackBar: MatSnackBar,  public dialog: MatDialog, private modalService: NgbModal) {
     this.afAuth.authState.subscribe(res =>{
         if(res){
           //still logged
@@ -142,16 +162,16 @@ export class SearchComponent implements OnInit {
     })
    }
 
-   open(content) {  
+   open(content) {
 
     this.modalService.open(content, {backdrop:'static', size:'xl', animation:true})
-     
+
   }
   registerForm: FormGroup;
   submitted = false;
 
   ngOnInit(): void {
-    
+
     this.registerForm = this.formBuilder.group({
       secondSelect: ['', Validators.required],
       // inp: ['', Validators.required],
@@ -184,6 +204,8 @@ export class SearchComponent implements OnInit {
       namdfsesadf2:['', Validators.required],
       spousedateofbirthd_:['', Validators.required],
 
+      notesForm:['',Validators.required],
+
       //optionals
       memoInput:['', Validators.nullValidator],
       name22:['', Validators.nullValidator],
@@ -214,27 +236,15 @@ valarray:boolean
 
 
   openClientInfo(objectid, content){
-      // console.log(this.searchData)
-    
-      this.open(content);
-    
+    //  this.open(content);
+
     this.searchData.forEach(insideArray=>{
-
       for(var i =0;i<insideArray.length; i++){
-
         if(insideArray[i].objectID===objectid){
           console.log(insideArray[i])
-
           this.firstName=insideArray[i].firstName;
           this.addressOne=insideArray[i].addressOne;
-        
-
-
-
-
           ////////////////////////////////////
-
-
           this.applicationType=insideArray[i].applicationType;
           this.fileStatus=insideArray[i].fileStatus;
           this.memo=insideArray[i].memo;
@@ -263,7 +273,7 @@ valarray:boolean
           this.postalCodeMailing=insideArray[i].postalCodeMailing;
           this.countryMailing=insideArray[i].countryMailing;
           this.stateMailing=insideArray[i].stateMailing;
-        // 
+        //
         this.occupation=insideArray[i].occupation;
         this.education=insideArray[i].education;
         this.maritalStatus=insideArray[i].maritalStatus;
@@ -272,51 +282,31 @@ valarray:boolean
         this.spouseLastName=insideArray[i].spouseLastName;
         this.spouseMiddleName=insideArray[i].spouseMiddleName;
         this.spouseEducation=insideArray[i].spouseEducation;
-     
+
         // this.sponsorTitle=(this.sponsorTitlee="NA";
         this.sponsorFirstName=insideArray[i].sponsorFirstName;
         this.sponsorLastName=insideArray[i].sponsorLastName;
         this.sponsorAddress=insideArray[i].sponsorAddress;
         this.sponsorPhone=insideArray[i].sponsorPhone;
-        
+
         this.sponsorSpouseFirstName=insideArray[i].sponsorSpouseFirstName;
         this.sponsorSpouseLastName=insideArray[i].sponsorSpouseLastName;
         this.sponsorSpouseAddress=insideArray[i].sponsorSpouseAddress;
         this.sponsorSpousePhone=insideArray[i].sponsorSpousePhone;
-    
 
-
-
-
-
-
-          
-
-
-
-
-
-
-
-          
-        
-        
         }
-
-
       }
-
     })
-    
-    
-    
-    
+
+
+
+
       // this.afDatabase.database().ref().onc
 
 
-  
 
-    
+
+
 
 
     // firebase.default.database().ref().on('child_added', function(snap){
@@ -324,25 +314,128 @@ valarray:boolean
 
     //     setTimeout(() => {
     //       this.memo = snap.val().officeFileNo;
-          
+
     //     }, 3000);
 
     //   }
     // });
-  
-    
 
-  
+    this.registerForm.disable();
   }
 
 
+  currentOjbectId= "";
+  showingOptions(objectid, content){
+    this.currentOjbectId=objectid;
+    this.open(content)
+  }
+
+  displayClientRecords(viewClientDialog){
+      console.log(this.currentOjbectId);
+      this.open(viewClientDialog)
+      this.openClientInfo(this.currentOjbectId,viewClientDialog);
+  }
+
+  addNotesDialog(notesDialog){
+  this.open(notesDialog)
+  console.log('adding notes')
+  this.displayingNotesRecord()
+}
+
+
+currentClientNotesArray=  [];
+
+ displayingNotesRecord(){
+  console.log('displayinr records')
+  var objectId = this.currentOjbectId;
+    var notesArray=[]
+
+
+var ref = firebase.default.database().ref();
+
+ ref.on('child_added', function(snap){
+  if(objectId === snap.key){
+    notesArray.push(snap.val().notes)
+  }
+});
+
+setTimeout(() => {
+  this.currentClientNotesArray = notesArray.slice(0);
+
+  this.currentClientNotesArray.forEach(element=>{
+
+    this.allNewNotesArray.push(element);
+
+  })
+    console.log(this.allNewNotesArray)
+}, 1000);
+
+}
+allNewNotesArray = [];
+
+displayError;
+
+addingNotes(){
+  this.displayError=""
+
+if(this.subject && this.notes){
+var date = moment().format('MMMM Do YYYY, h:mm:ss a');
+   console.log(date);
+
+this.addNotesToFirebase(date);
+
+
+
+
+}
+else{
+  this.displayError="Input Error";
+  console.log('eror')
+
+}
+}
+
+
+addNotesToFirebase(date){
+  var objectId = this.currentOjbectId;
+  var notes = this.notes;
+  var subject = this.subject;
+
+  console.log('function addnotesto firebases')
+  var ref = firebase.default.database().ref();
+  ref.on('child_added', function(snap){
+      if(objectId === snap.key){
+
+        ref.child(objectId).child('notes').push({
+          subject:subject,
+          notes:notes,
+          date:date
+
+        })
+
+      }
+    });
+
+
+}
+
+
+
+
+
+
+openSnackBar(message: string, action: string) {
+  this._snackBar.open(message, action, {
+    duration: 2000,
+  });
+}
   openModal(){
     $("#notificationModal").modal('show')
   }
 
 
 
-  
+
 searchSubmit(){
   this.showResult=true;
   this.searchData=[]
@@ -361,9 +454,9 @@ searchSubmit(){
 
   this.backend.search(search, index).subscribe(res=>{
     this.searchData.push(res);
-  })  
+  })
   console.log(this.searchData)
-  
+
 }
 
 
