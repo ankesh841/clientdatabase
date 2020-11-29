@@ -254,35 +254,42 @@
     </div>
 
     <div class="modal-body">
-      <div class="jumbotron">
-        <div class="row text-center">
-          <div class="col-md-3">
-            <mat-form-field class="width_" appearance="outline">
-              <mat-label>Enter Subject</mat-label>
-              <input
-                matInput
-                placeholder="Subject"
-                [(ngModel)]="subject"
-                name="subject_"
-              />
-            </mat-form-field>
-          </div>
+      <div class="container card">
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-md-3">
+              <mat-form-field class="width_" appearance="outline">
+                <mat-label>Enter Subject</mat-label>
+                <input
+                  matInput
+                  placeholder="Subject"
+                  [(ngModel)]="subject"
+                  name="subject_"
+                />
+              </mat-form-field>
+            </div>
 
-          <div class="col-md-9">
-            <mat-form-field class="width_">
-              <mat-label>Enter Notes</mat-label>
-              <textarea
-                matInput
-                placeholder="Write.."
-                [(ngModel)]="notes"
-                name="notes_name"
-              ></textarea>
-            </mat-form-field>
+            <div class="col-md-9">
+              <mat-form-field class="width_">
+                <mat-label>Notes</mat-label>
+                <textarea
+                  matInput
+                  placeholder="Write.."
+                  [(ngModel)]="notes"
+                  name="notes_name"
+                ></textarea>
+              </mat-form-field>
+            </div>
           </div>
         </div>
 
-        <div class="mt-3">
-          <button mat-raised-button color="primary" (click)="addingNotes()">
+        <div class="mb-4">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="addingNotes()"
+            style="margin-left: 1.2em"
+          >
             Add Notes
           </button>
         </div>
@@ -297,25 +304,26 @@
       <div *ngFor="let item of allNewNotesArray; let i = index">
         <!-- {{ item[0].date }} -->
       </div>
-      <div class="jumbotron">
-        <div
-          class="card border-dark mb-3"
-          *ngFor="let item of allNewNotesArray; let i = index"
-        >
-          <div class="card-header display-4" style="font-size: 1.4em">
-            Header
-            {{ item.date }}
-          </div>
-          <div class="card-body text-dark">
-            <p class="card-text" style="font-size: 1.2em">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted" style="font-size: 1.3em"
-              >Last updated 3 mins ago</small
-            >
+      <div class="card">
+        <div class="card-body">
+          <div
+            class="card border-dark mb-3"
+            *ngFor="let item of currentClientNotesArray; let i = index"
+          >
+            <div class="card-header display-4" style="font-size: 1.4em">
+              {{ item.subject }}
+            </div>
+
+            <div class="card-body text-dark">
+              <p class="card-text" style="font-size: 1.2em">
+                {{ item.notes }}
+              </p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted" style="font-size: 1.3em">{{
+                item.date
+              }}</small>
+            </div>
           </div>
         </div>
       </div>

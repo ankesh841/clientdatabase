@@ -22,9 +22,9 @@ export class BackendService {
       'Authorization': 'my-auth-token'
     })
   };
-  private rootUrl = "http://localhost:3000";
+  // private rootUrl = "http://localhost:3000";
 //
-  // private rootUrl = "";
+  private rootUrl = "";
 
 
   search(searchString, searchIndex){

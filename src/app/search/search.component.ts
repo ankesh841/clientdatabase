@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import * as firebase from 'firebase';
 import {AngularFireAuth}from '@angular/fire/auth';
@@ -21,6 +21,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 // import { CONNREFUSED } from 'dns';
 // import { copyFileSync } from 'fs';
+
+
+
 
 
 @Component({
@@ -153,7 +156,7 @@ export class SearchComponent implements OnInit {
   search_main = "";
   afDatabase: any;
   constructor(private afAuth:AngularFireAuth,
-     public formBuilder:FormBuilder, private backend:BackendService,private _snackBar: MatSnackBar,  public dialog: MatDialog, private modalService: NgbModal) {
+     public formBuilder:FormBuilder, private backend:BackendService, private changeDetect:ChangeDetectorRef, private _snackBar: MatSnackBar,  public dialog: MatDialog, private modalService: NgbModal) {
     this.afAuth.authState.subscribe(res =>{
         if(res){
           //still logged
@@ -236,12 +239,10 @@ valarray:boolean
 
 
   openClientInfo(objectid, content){
-    //  this.open(content);
-
     this.searchData.forEach(insideArray=>{
       for(var i =0;i<insideArray.length; i++){
         if(insideArray[i].objectID===objectid){
-          console.log(insideArray[i])
+          // console.log(insideArray[i])
           this.firstName=insideArray[i].firstName;
           this.addressOne=insideArray[i].addressOne;
           ////////////////////////////////////
@@ -297,30 +298,7 @@ valarray:boolean
         }
       }
     })
-
-
-
-
-      // this.afDatabase.database().ref().onc
-
-
-
-
-
-
-
-    // firebase.default.database().ref().on('child_added', function(snap){
-    //   if(objectid === snap.key){
-
-    //     setTimeout(() => {
-    //       this.memo = snap.val().officeFileNo;
-
-    //     }, 3000);
-
-    //   }
-    // });
-
-    this.registerForm.disable();
+   this.registerForm.disable();
   }
 
 
@@ -331,66 +309,56 @@ valarray:boolean
   }
 
   displayClientRecords(viewClientDialog){
-      console.log(this.currentOjbectId);
       this.open(viewClientDialog)
       this.openClientInfo(this.currentOjbectId,viewClientDialog);
   }
 
   addNotesDialog(notesDialog){
-  this.open(notesDialog)
-  console.log('adding notes')
-  this.displayingNotesRecord()
+  this.currentClientNotesArray=  [];
+  this.open(notesDialog);
+  this.displayingNotesRecord();
+  this.currentClientNotesArray = this.displayingNotesRecord();
 }
 
 
-currentClientNotesArray=  [];
+currentClientNotesArray;
 
  displayingNotesRecord(){
-  console.log('displayinr records')
   var objectId = this.currentOjbectId;
-    var notesArray=[]
-
-
+  var notesArray=[]
 var ref = firebase.default.database().ref();
-
  ref.on('child_added', function(snap){
+
   if(objectId === snap.key){
-    notesArray.push(snap.val().notes)
-  }
+  snap.forEach(element => {
+    element.forEach(dl=>{
+      notesArray.push(dl.val());
+    })
 });
 
-setTimeout(() => {
-  this.currentClientNotesArray = notesArray.slice(0);
-
-  this.currentClientNotesArray.forEach(element=>{
-
-    this.allNewNotesArray.push(element);
-
-  })
-    console.log(this.allNewNotesArray)
-}, 1000);
-
+  }
+});
+return notesArray.sort(function(x, y){
+  return x.timestamp - y.timestamp;
+})
+// return notesArray;
 }
-allNewNotesArray = [];
 
+allNewNotesArray = [];
 displayError;
 
 addingNotes(){
   this.displayError=""
-
 if(this.subject && this.notes){
 var date = moment().format('MMMM Do YYYY, h:mm:ss a');
-   console.log(date);
-
 this.addNotesToFirebase(date);
-
-
-
+this.currentClientNotesArray=[];
+this.currentClientNotesArray = this.displayingNotesRecord();
+this.changeDetect.detectChanges();
 
 }
 else{
   this.displayError="Input Error";
-  console.log('eror')
 
 }
 }
@@ -401,8 +369,9 @@ addNotesToFirebase(date){
   var notes = this.notes;
   var subject = this.subject;
 
-  console.log('function addnotesto firebases')
+
   var ref = firebase.default.database().ref();
+
   ref.on('child_added', function(snap){
       if(objectId === snap.key){
 
@@ -455,7 +424,7 @@ searchSubmit(){
   this.backend.search(search, index).subscribe(res=>{
     this.searchData.push(res);
   })
-  console.log(this.searchData)
+  // console.log(this.searchData)
 
 }
 

@@ -39,6 +39,6 @@ tr:nth-child(even) {
 .cdk-overlay-pane {
   z-index: 10000 !important;
 }
-* {
+/* * {
   z-index: 10000;
-}
+} */
