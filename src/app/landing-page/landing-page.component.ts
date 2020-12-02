@@ -10,7 +10,7 @@ import * as firebase from 'firebase';
 export class LandingPageComponent implements OnInit {
   userEmail;
 
-  constructor(private afAuth:AngularFireAuth) {    
+  constructor(private afAuth:AngularFireAuth) {
     this.afAuth.authState.subscribe(res =>{
       if(res){
         this.userEmail = res.email;
@@ -21,42 +21,42 @@ export class LandingPageComponent implements OnInit {
   storageRef;
   uploadingFileNameDisplay= ""
 
-  upload(event) {   
-    
+  upload(event) {
+
       const file = event.target.files[0];
       var uploadingFileName = "";
       (file.name)?uploadingFileName=file.name:uploadingFileName=Math.floor(100000 + Math.random() * 900000)+"";
     this.uploadingFileNameDisplay=uploadingFileName;
-
       console.log(uploadingFileName)
-// this.storageRef = firebase.default.storage().ref();
-// this.storageRef.child('users/'+this.userEmail).child(uploadingFileName).put(file).then(function(snapshot) {
-
-//   console.log(snapshot)
-//   console.log('Uploaded a file!');
-
-//     });
   }
 
 
+
+
+  storedFilesUrls = [];
+
   showAllFiles(){
 
+    let temp =[]
     var todownload  = firebase.default.storage().ref('users/'+this.userEmail+'/');
       todownload.listAll().then(function(result){
         result.items.forEach(function(imageRef) {
           // And finally display them
           // displayImage(imageRef);
           imageRef.getDownloadURL().then(function(url){
-            console.log(url, 'url')
+
+            // temp.push(url)
+            // console.log(temp)
+
           }).catch(function(error){
             console.log(error)
           })
-          
-          
+
+
         });
 
       });
-    
+
 
   }
   ngOnInit(): void {

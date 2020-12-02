@@ -117,23 +117,17 @@
 
   <div class="row mt-3 pl">
     <div class="col-md-8">
-      <div class="card">
+      <div class="card pb-4">
         <div class="card-body">
-          <div class="img-upload">
-            <label for="file-input">
-              <img
-                style="height: 80px; width: 120px"
-                src="../../assets/storage.png"
-              />
-            </label>
-
-            <input id="file-input" type="file" (change)="upload($event)" />
-          </div>
+          <a [routerLink]="['/search']">
+            <img
+              class="iconDefaultDimensions"
+              style="width: 100px"
+              src="../../assets/storage.png"
+            />
+          </a>
         </div>
-
-        File: {{ uploadingFileNameDisplay }}
-        <br />
-        File Storage
+        Storage
       </div>
     </div>
 
@@ -160,7 +154,7 @@
 <!-- <label for="file">File:</label>
 <input type="file" (change)="upload($event)" accept=".png,.jpg" /> -->
 
-<nav
+<!-- <nav
   id="bottomNav_"
   class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light d-block d-sm-block d-md-none"
   style="font-size: 1.7em"
@@ -183,4 +177,4 @@
       <a> <span class="material-icons"> youtube_searched_for </span></a>
     </li>
   </ul>
-</nav>
+</nav> -->

@@ -42,3 +42,14 @@ tr:nth-child(even) {
 /* * {
   z-index: 10000;
 } */
+.image-upload > input {
+  display: none;
+}
+
+#file-input {
+  display: none;
+}
+
+.col-md-3 p {
+  width: 100%;
+}

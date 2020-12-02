@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatToolbarModule} from '@angular/material/toolbar'; 
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 import {MatDialogModule} from '@angular/material/dialog';
@@ -24,7 +24,7 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
   import {MatTableModule} from '@angular/material/table';
 
 
-// MatNativeDateModule 
+// MatNativeDateModule
 
 import {MatIconModule} from '@angular/material/icon';
 
@@ -60,6 +60,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 
+
+
+
 firebase.default.initializeApp(environment.firebase)
 const routes: Routes = [
   {path:'', component:LandingPageComponent},
@@ -67,7 +70,7 @@ const routes: Routes = [
   { path: 'addClient', component: AddClientComponent },
   {path: 'login', component:LoginComponent},
   {path: 'search', component:SearchComponent}
-  
+
 ];
 
 @NgModule({

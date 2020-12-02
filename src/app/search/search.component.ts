@@ -19,11 +19,18 @@ import * as $ from 'jquery'
 import { FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
+import { timestamp } from 'rxjs/operators';
+import _, { map } from 'underscore';
+
+import swal from "sweetalert2";
+import { browser } from 'protractor';
+
 // import { CONNREFUSED } from 'dns';
 // import { copyFileSync } from 'fs';
 
 
 
+import { saveAs } from 'file-saver';
 
 
 @Component({
@@ -236,9 +243,11 @@ export class SearchComponent implements OnInit {
 //fill all data
 
 valarray:boolean
+clientRecordProgress:boolean;
 
 
   openClientInfo(objectid, content){
+    this.clientRecordProgress = true;
     this.searchData.forEach(insideArray=>{
       for(var i =0;i<insideArray.length; i++){
         if(insideArray[i].objectID===objectid){
@@ -299,13 +308,27 @@ valarray:boolean
       }
     })
    this.registerForm.disable();
+
+   setTimeout(() => {
+      this.clientRecordProgress = false;
+   }, 1000);
   }
 
 
   currentOjbectId= "";
+  showingOptionProgress:boolean;
+
   showingOptions(objectid, content){
+    this.showingOptionProgress = true;
+
+    this.uploadingFileNameDisplay=""
     this.currentOjbectId=objectid;
-    this.open(content)
+    this.open(content);
+
+    setTimeout(() => {
+        this.showingOptionProgress=false;
+    }, 1000);
+
   }
 
   displayClientRecords(viewClientDialog){
@@ -313,24 +336,115 @@ valarray:boolean
       this.openClientInfo(this.currentOjbectId,viewClientDialog);
   }
 
+  progressBarDisplayNotes:boolean;
+
   addNotesDialog(notesDialog){
+  this.progressBarDisplayNotes = false;
   this.currentClientNotesArray=  [];
+  this.resetNotesForm();
   this.open(notesDialog);
-  this.displayingNotesRecord();
-  this.currentClientNotesArray = this.displayingNotesRecord();
+
+  this.displayingNotesRecord().then(val=>{
+    this.currentClientNotesArray  = val;
+  })
+
+  setTimeout(() => {
+    this.progressBarDisplayNotes = true;
+  }, 1000);
+
 }
 
 
+
+storedFilesUrls;
+
+storedFileProgress:boolean;
+
+
+openDownloadDialogBox(downloadDialogBox){
+  this.storedFileProgress = true;
+
+  this.open(downloadDialogBox);
+  this.storedFilesUrls = this.showAllFiles();
+
+  setTimeout(() => {
+      this.storedFileProgress=false;
+  }, 2000);
+  console.log(this.storedFilesUrls)
+
+}
+
+
+downloadingFilesOnClick(downloadLink){
+    console.log(downloadLink)
+    // browser.downloads.
+    window.open(downloadLink , '_blank');
+    // saveAs.saveAs(downloadLink, "image.jpg");
+
+    // window.open(downloadLink)
+    saveAs.saveAs(downloadLink)
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.responseType = 'blob';
+    // xhr.onload = function(event) {
+    //   var blob = xhr.response;
+    // };
+    // xhr.open('GET', downloadLink);
+    // xhr.send();
+
+
+}
+
+
+showAllFiles(){
+
+  let temp = []
+  let tempObj ={}
+  var todownload  = firebase.default.storage().ref('data/'+this.currentOjbectId+'/');
+
+
+    todownload.listAll().then(function(result){
+
+
+
+      result.items.forEach(function(imageRef) {
+
+        console.log(imageRef.name)
+        imageRef.getDownloadURL().then(function(url){
+
+          tempObj ={
+            fileName:imageRef.name,
+            url:url
+          }
+
+          temp.push(tempObj)
+
+        }).catch(function(error){
+          console.log(error)
+        })
+
+
+      });
+
+    })
+
+    return temp;
+}
+
+
+
+ref  = firebase.default.database().ref();
 currentClientNotesArray;
 
- displayingNotesRecord(){
+  async displayingNotesRecord(){
   var objectId = this.currentOjbectId;
   var notesArray=[]
-var ref = firebase.default.database().ref();
- ref.on('child_added', function(snap){
+
+ this.ref.on('child_added', function(snap){
 
   if(objectId === snap.key){
-  snap.forEach(element => {
+
+   snap.forEach(element => {
     element.forEach(dl=>{
       notesArray.push(dl.val());
     })
@@ -338,10 +452,20 @@ var ref = firebase.default.database().ref();
 
   }
 });
-return notesArray.sort(function(x, y){
-  return x.timestamp - y.timestamp;
-})
-// return notesArray;
+
+// notesArray.sort(function(x, y){
+//   return y.timestamp - x.timestamp;
+// })
+
+// var sortQ = _.sortBy( notesArray, 'timestamp' );
+// console.log(sortQ)
+// _.sortBy( jsonData, function( item ) { return -item.average; } )
+
+// var a = _.sortBy( notesArray, function( val ){ return -val.timestamp; } );
+
+// return _.sortBy( notesArray, function( val ){ return -val.timestamp; } );
+return notesArray.sort((a, b) => b.timestamp - a.timestamp);
+
 }
 
 allNewNotesArray = [];
@@ -369,7 +493,8 @@ addNotesToFirebase(date){
   var notes = this.notes;
   var subject = this.subject;
 
-
+  var timeStamp = Date.now();
+  // console.log(timeStamp)
   var ref = firebase.default.database().ref();
 
   ref.on('child_added', function(snap){
@@ -378,18 +503,80 @@ addNotesToFirebase(date){
         ref.child(objectId).child('notes').push({
           subject:subject,
           notes:notes,
-          date:date
-
+          date:date,
+          timestamp:timeStamp
         })
 
       }
     });
+
+    this.resetNotesForm();
+
+
+
+}
+
+resetNotesForm(){
+  this.notes="";
+  this.subject="";
+  this.uploadingFileNameDisplay=""
+}
+
+
+storageRef;
+uploadingFileNameDisplay= ""
+
+upload(event) {
+
+    const file = event.target.files[0];
+    var uploadingFileName = "";
+    this.uploadingFileNameDisplay = "";
+    (file.name)?uploadingFileName=file.name:uploadingFileName=Math.floor(100000 + Math.random() * 900000)+"";
+  this.uploadingFileNameDisplay=uploadingFileName;
+
+    console.log(uploadingFileName)
+    // this.open(uploadImageAlertDialog);
+
+    swal.fire({
+      title: 'Do you want to upload ? '+"'"+uploadingFileName+"'",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.uploadFile(uploadingFileName, file);
+
+        swal.fire(
+          'Uploaded!',
+          'Your file has been Uploaded to the Database.',
+          'success'
+        )
+      }
+    })
+
+
+
+
+
 
 
 }
 
 
 
+
+
+uploadFile(uploadingFileName, file){
+  this.storageRef = firebase.default.storage().ref();
+  this.storageRef.child('data/'+this.currentOjbectId).child(uploadingFileName).put(file).then(function(snapshot) {
+    console.log(snapshot)
+    console.log('Uploaded a file!');
+
+      });
+
+}
 
 
 
