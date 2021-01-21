@@ -7,7 +7,6 @@
       <div class="display-4 brand" style="font-size: 4em">Log In</div>
       <p class="text-muted mt-4 mb-5" style="font-size: 1.4em">Immigration</p>
       <hr class="mb-3" />
-
       <mat-form-field appearance="outline" class="width_">
         <mat-label>Email</mat-label>
         <input
@@ -17,7 +16,6 @@
           name="email"
         />
       </mat-form-field>
-
       <mat-form-field appearance="outline" class="width_">
         <mat-label>password</mat-label>
         <input
@@ -36,15 +34,9 @@
           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
-
-      <!-- <button
-        class="btn btn-lg btn-google btn-block col-12"
-        (click)="goolgeLogin()"
-        type="button"
-      >
-        <i class="fa fa-google fa-fw mr-2"></i> Continue with Google
-      </button> -->
-
+      <div class="alert alert-danger" *ngIf="loginErrorMessage">
+        {{ loginErrorMessage }}
+      </div>
       <button
         (click)="loginMethod()"
         mat-raised-button
@@ -57,12 +49,10 @@
       <button mat-raised-button color="warn" (click)="register()">
         Register
       </button>
-
       <p class="text-muted mt-3 text-justify">
         By Signing In you are agree to our Terms of Use and Privacy Policy
       </p>
     </mat-card>
   </div>
 </div>
-
 <div class="container"></div>

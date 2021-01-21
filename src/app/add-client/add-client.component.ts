@@ -1,4 +1,4 @@
-import { Component, defineInjectable, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -7,10 +7,12 @@ import * as jquery from 'jquery';
 import {AngularFireAuth} from '@angular/fire/auth';
 
 import * as firebase from 'firebase';
-import { SplitInterpolation } from '@angular/compiler';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FileWatcherEventKind } from 'typescript';
-import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
+
+
+import Swal from 'sweetalert2'
+import { Route, Router } from '@angular/router';
 
 
 @Component({
@@ -30,11 +32,11 @@ export class AddClientComponent implements OnInit {
       if(res){
         this.login = false;
         this.user =res.email;
-        console.log('user is logged in ')
+        // console.log('user is logged in ')
       }
       else{
         this.login = true;
-        console.log('showing login interface.')
+        // console.log('showing login interface.')
   }
   })
 
@@ -44,16 +46,22 @@ export class AddClientComponent implements OnInit {
       // inp: ['', Validators.required],
       first:['', Validators.required],
 
-      inputOffice:['',Validators.required],
+      inputOffice: [{
+        value: null,
+        disabled: true
+      }],
+      // inputOffice:['',Validators.required],
+
       // inputOffice1:['', Validators.required],
+
       // titleGeneralClient:['',Validators.required],
       name2:['', Validators.required],
       // name2q:['', Validators.required],
       clientsta:['', Validators.nullValidator],
       name2s:['', Validators.required],
       gende:['', Validators.required],
-      clientDOB1:['', Validators.required],
-      phonenumberclientt:['', Validators.required],
+      clientDOB1:['', Validators.nullValidator],
+      phonenumberclientt:['', Validators.nullValidator],
       clientstassa:['', Validators.required],
       addsre:['', Validators.required],
       cihtyl:['', Validators.required],
@@ -64,12 +72,12 @@ export class AddClientComponent implements OnInit {
       cfliefntstassa:['', Validators.required],
       memoInpfutdf:['', Validators.required],
       cfflientgstassa:['', Validators.required],
-      fcfflientgstassa:['', Validators.required],
+      fcfflientgstassa:['', Validators.nullValidator],
       cfflientgstassfa:['', Validators.required],
       cfflientgdsfstassdfa:['', Validators.required],
       nasdame2:['', Validators.required],
       namdfsesadf2:['', Validators.required],
-      spousedateofbirthd_:['', Validators.required],
+      spousedateofbirthd_:['', Validators.nullValidator],
 
       //optionals
       memoInput:['', Validators.nullValidator],
@@ -89,8 +97,8 @@ export class AddClientComponent implements OnInit {
       inp:['', Validators.nullValidator],
       inputOffice1:['', Validators.nullValidator],
       memoInputdf:['', Validators.nullValidator],
-      cfflientgstassfa_:['', Validators.required],
-      emailFormControl:['', Validators.required]
+      cfflientgstassfa_:['', Validators.nullValidator],
+      emailFormControl:['', Validators.nullValidator]
 
     });
 
@@ -102,7 +110,6 @@ export class AddClientComponent implements OnInit {
 //     memoInput: new FormControl(),
 //     secondSelect:new FormControl()
 //  });
-
 
 
 
@@ -122,16 +129,24 @@ export class AddClientComponent implements OnInit {
     else{
       this.sendData();
       this.showProgressbar=false;
-  this.registerForm.reset();
+      // this.registerForm.reset();
 
-
+      Swal.fire({
+        title: 'Great!',
+        text: 'File Successfully Added to the Database',
+        icon: 'success'}).then((result) => {
+            if (result.isConfirmed) {
+            this.route.navigate(["/landingPage"]);
+          }
+        })
     }
-    alert('successfully added')
+    // alert('successfully added')
 
   }
 
   onReset(){
     this.submitted = false;
+    this.showProgressbar = false;
     this.registerForm.reset();
 
   }
@@ -139,11 +154,13 @@ export class AddClientComponent implements OnInit {
 
 
 
-  constructor(private afAuth:AngularFireAuth, private formBuilder: FormBuilder, private _snackBar: MatSnackBar){
+  constructor(private afAuth:AngularFireAuth, private route:Router, private formBuilder: FormBuilder, private _snackBar: MatSnackBar){
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 80, 0, 1);
     this.currentDate = new Date();
      this.maxDate = this.currentDate;
+
+
 
   }
 
@@ -243,30 +260,21 @@ login:Boolean;
 
 
 onsubmitForm(){
-  console.log('onsubmit form ')
+  // console.log('onsubmit form ')
 }
 
 sendData(){
 
-    if(!this.memo){
-      this.memo="NA"
-    }
-
-
-
-
-
-
    this.firebaseRef.ref().push({
-     clientDob:this.clientDOB,
-
+     clientDob:(this.clientDOB)?this.clientDOB:'NA',
+    phoneNumber:(this.phoneNumberClient)?this.phoneNumberClient:"NA",
       applicationType:this.applicationType,
       fileStatus:this.fileStatus,
-      memo:this.memo,
+      memo:(this.memo)?this.memo:"NA",
       // embassyFileNo:(this.embassyFileNo)?this.embassyFileNo:"NA",
       officeFileNo:this.officeFileNo,
       EmbassyFileNo1:(this.EmbassyFileNo1)?this.EmbassyFileNo1:"NA",
-      email:this.email,
+      email:(this.email)?this.email:"NA",
       firstName:this.firstName,
       // caseProcessName:(this.caseProcessName)?this.caseProcessName:"NA",
       middleName:(this.middleName)?this.middleName:"NA",
@@ -281,17 +289,17 @@ sendData(){
       addressOne:this.addressOne,
       // addressTwo:(this.addressTwo)?this.addressTwo:"NA",
       city:this.city,
-      postalCode:this.postalCode,
+      postalCode:(this.postalCode)?this.postalCode:"NA",
       // mailing
-      addressOneMailing:this.addressOneMailing,
+      addressOneMailing:(this.addressOneMailing)?this.addressOneMailing:"NA",
       // addressTwoMailing:this.addressTwoMailing,
-      cityMailing:this.cityMailing,
-      postalCodeMailing:this.postalCodeMailing,
-      countryMailing:this.countryMailing,
-      stateMailing:this.stateMailing,
+      cityMailing:(this.cityMailing)?this.cityMailing:"NA",
+      postalCodeMailing:(this.postalCodeMailing)?this.postalCodeMailing:"NA",
+      countryMailing:(this.countryMailing)?this.countryMailing:"NA",
+      stateMailing:(this.stateMailing)?this.stateMailing:"NA",
     //
-      occupation:this.occupation,
-      education:this.education,
+      occupation:(this.occupation)?this.occupation:'NA',
+      education:(this.education)?this.education:"NA",
       maritalStatus:this.maritalStatus,
 
       spouseTitle:(this.spouseTitle)?this.spouseTitle:"NA",
@@ -319,7 +327,7 @@ sendData(){
 
 
 checkPhone(){
-  console.log('call')
+  // console.log('call')
         var filter = /^\d*(?:\.\d{1,2})?$/; //checking only numbers
         if(!filter.test(this.phoneNumberClient)|| !filter.test(this.sponsorPhone) ||!filter.test(this.sponsorSpousePhone) ){
           this.phoneNumberClient='';

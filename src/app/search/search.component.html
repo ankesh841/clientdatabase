@@ -2,7 +2,6 @@
   <div class="display-4 mb-4 text-center" style="font-size: 3em">
     <span style="text-decoration: underline"> Search</span>
   </div>
-
   <div class="row">
     <div class="col-md-4">
       <mat-form-field class="width_" appearance="outline">
@@ -38,7 +37,6 @@
       </mat-form-field>
     </div>
   </div>
-
   <!-- <div class="row">
     <div class="col-md-4">
       <mat-form-field appearance="outline" class="width_">
@@ -48,7 +46,6 @@
         </mat-select>
       </mat-form-field>
     </div>
-
     <div class="col-md-4">
       <mat-form-field appearance="outline" class="width_">
         <mat-label>File Status</mat-label>
@@ -57,7 +54,6 @@
         </mat-select>
       </mat-form-field>
     </div>
-
     <div class="col-md-4">
       <mat-form-field appearance="outline" class="width_">
         <mat-label>Office</mat-label>
@@ -67,7 +63,6 @@
       </mat-form-field>
     </div>
   </div> -->
-
   <div class="row mt-4">
     <div class="col-md-7 ml-auto">
       <mat-form-field class="width_" appearance="outline">
@@ -80,7 +75,6 @@
         />
       </mat-form-field>
     </div>
-
     <div class="col-md-4 text-center">
       <button
         (click)="searchSubmit()"
@@ -92,14 +86,12 @@
       </button>
     </div>
   </div>
-
   <!-- <mat-form-field appearance="outline">
     <mat-label>First Name</mat-label>
     <input matInput placeholder="First Name" [(ngModel)]="firstName_search" name="first">
 </mat-form-field> -->
-
   <!-- showing Result -->
-  <div *ngIf="showResult">
+  <div *ngIf="showResult" style="margin-bottom: 90px">
     <mat-divider class="my-3"> </mat-divider>
     <p class="display-4 text-center" style="font-size: 2.5em">Results</p>
     <table class="shadow">
@@ -112,7 +104,6 @@
         <th>DOB</th>
         <th>Address</th>
       </tr>
-
       <ng-container *ngFor="let item of searchData; let i = index">
         <tr *ngFor="let it of item">
           <td>
@@ -140,7 +131,6 @@
       </ng-container>
     </table>
   </div>
-
   <!-- select options-->
   <ng-template
     #showsOptionsAfterClicking
@@ -156,6 +146,7 @@
       >
         Select Options
       </p>
+
       <button
         type="button"
         class="close"
@@ -165,13 +156,28 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-
     <br />
     <mat-progress-bar mode="indeterminate" *ngIf="showingOptionProgress">
     </mat-progress-bar>
     <br />
 
     <div class="container text-center">
+      <div class="mx-auto mt-4">
+        <p class="mx-auto" style="font-weight: 300; font-size: 2em">
+          <span style="font-size: 1.25em"> Name: </span> {{ firstName
+          }}<br /><br />
+          <span style="font-size: 1.25em">ID: </span> {{ officeFileNo }}
+        </p>
+      </div>
+
+      <!-- <div class="modal-header mx-auto">
+        <p class="mx-auto" style="font-weight: 300; font-size: 2em">
+          <span style="font-size: 1.25em">  Name: </span> {{ firstName
+          }}<br /><br />
+          <span style="font-size: 1.25em">ID: </span> {{ officeFileNo }}
+        </p>
+      </div> -->
+
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 col-sm-6 px-3 py-3">
@@ -188,7 +194,6 @@
               View Record
             </div>
           </div>
-
           <div class="col-md-4 col-sm-6 px-3 py-3">
             <div class="card pb-4">
               <div class="card-body">
@@ -199,11 +204,9 @@
                   />
                 </a>
               </div>
-
               Update Record
             </div>
           </div>
-
           <div class="col-md-4 col-sm-6 px-3 py-3">
             <div class="card pb-4">
               <div class="card-body">
@@ -221,31 +224,43 @@
             </div>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-6 col-sm-6 px-3 py-3">
             <div class="card pb-4">
               <div class="card-body">
-                <div class="img-upload">
+                <a href="javascript:void(0)" (click)="file.click()">
+                  <img
+                    style="height: 80px; width: 120px"
+                    src="../../assets/storage.png"
+                  />
+                </a>
+                <!-- <div class="img-upload">
                   <label for="file-input">
                     <img
                       style="height: 80px; width: 120px"
                       src="../../assets/storage.png"
                     />
                   </label>
-
                   <input
                     id="file-input"
                     type="file"
+                    #file
                     (change)="upload($event)"
                   />
-                </div>
+                </div> -->
+
+                <input
+                  type="file"
+                  id="file-input"
+                  #file
+                  (change)="upload($event)"
+                />
+                <br />
                 File: {{ uploadingFileNameDisplay }}
               </div>
               Upload File
             </div>
           </div>
-
           <div class="col-md-6 col-sm-6 px-3 py-3 mt-3">
             <div class="card pb-4">
               <div class="card-body">
@@ -266,7 +281,6 @@
         </div>
       </div>
     </div>
-
     <div class="modal-footer">
       <button
         type="button"
@@ -277,13 +291,9 @@
       </button>
     </div>
   </ng-template>
-
   <!--  -->
-
   <!--
-
    -->
-
   <ng-template #downloadDialogBox let-modal>
     <div class="modal-header" style="background-color: #3f51b5; color: white">
       <p
@@ -306,12 +316,34 @@
     <mat-progress-bar mode="indeterminate" *ngIf="storedFileProgress">
     </mat-progress-bar>
     <br />
+    <div class="mx-auto mt-4">
+      <p class="mx-auto" style="font-weight: 300; font-size: 2em">
+        <span style="font-size: 1.25em"> Name: </span> {{ firstName
+        }}<br /><br />
+        <span style="font-size: 1.25em">ID: </span> {{ officeFileNo }}
+      </p>
+    </div>
 
     <div class="modal-body">
       <div class="container">
         <div class="card">
           <div class="card-body text-center">
-            <div class="row">
+            <p
+              *ngIf="storedFilesUrls?.length === 0"
+              class="display-4 text-center"
+              style="margin-bottom: 1em; font-size: 2em"
+            >
+              No Files Yet
+            </p>
+            <p
+              *ngIf="storedFilesUrls?.length > 0"
+              class="display-4 text-center"
+              style="margin-bottom: 1em; font-size: 2em"
+            >
+              All Files:
+            </p>
+
+            <div class="row" *ngIf="storedFilesUrls">
               <div *ngFor="let item of storedFilesUrls" class="mx-auto pb-4">
                 <div class="card card-body px-4 py-4">
                   <div class="col">
@@ -321,7 +353,6 @@
                       style="height: 170px; width: 170px"
                     />
                     <br />
-
                     <p style="width: 100%">{{ item.fileName }}</p>
                     <br />
                     <button
@@ -331,9 +362,7 @@
                     >
                       Download
                     </button>
-
                     <!-- <a href="{{ item.url }}" download>Download Receipt</a> -->
-
                     <!-- <a
                       download="{{ item.fileName }}"
                       rel="nofollow"
@@ -359,9 +388,7 @@
       </button>
     </div>
   </ng-template>
-
   <!--  -->
-
   <ng-template let-modal form #notesDialog>
     <div class="modal-header" style="background-color: #3f51b5; color: white">
       <p
@@ -381,6 +408,14 @@
       </button>
     </div>
 
+    <div class="mx-auto mt-4">
+      <p class="mx-auto" style="font-weight: 300; font-size: 2em">
+        <span style="font-size: 1.25em"> Name: </span> {{ firstName
+        }}<br /><br />
+        <span style="font-size: 1.25em">ID: </span> {{ officeFileNo }}
+      </p>
+    </div>
+
     <div class="modal-body">
       <div class="container card">
         <div class="card-body">
@@ -396,7 +431,6 @@
                 />
               </mat-form-field>
             </div>
-
             <div class="col-md-9">
               <mat-form-field class="width_">
                 <mat-label>Notes</mat-label>
@@ -410,7 +444,6 @@
             </div>
           </div>
         </div>
-
         <div class="mb-4">
           <button
             mat-raised-button
@@ -421,29 +454,38 @@
             Notes
           </button>
         </div>
-
         <div class="alert alert-danger mt-4" *ngIf="displayError">
           {{ displayError }}
         </div>
-      </div>
 
+        <div class="alert alert-danger mt-4" *ngIf="notLoggedInErrorDisplay">
+          {{ notLoggedInErrorDisplay }}
+        </div>
+      </div>
       <br />
       <mat-progress-bar
         mode="query"
         *ngIf="currentClientNotesArray && !progressBarDisplayNotes"
       >
       </mat-progress-bar>
-
+      <mat-progress-bar mode="query" *ngIf="notesDialogProressBar">
+      </mat-progress-bar>
       <br />
-
       <p
+        *ngIf="currentClientNotesArray?.length === 0"
+        class="display-4 text-center"
+        style="margin-bottom: 1em; font-size: 2em"
+      >
+        No Notes yet
+      </p>
+      <p
+        *ngIf="currentClientNotesArray?.length > 0"
         class="display-4 text-center"
         style="margin-bottom: 1em; font-size: 2em"
       >
         All Notes:
       </p>
-
-      <div class="card" *ngIf="currentClientNotesArray">
+      <div class="card" *ngIf="currentClientNotesArray?.length > 0">
         <div class="card-body">
           <div
             class="card border-dark mb-3"
@@ -452,7 +494,6 @@
             <div class="card-header display-4" style="font-size: 1.4em">
               {{ item.subject }}
             </div>
-
             <div class="card-body text-dark">
               <p class="card-text" style="font-size: 1.2em">
                 {{ item.notes }}
@@ -467,7 +508,6 @@
         </div>
       </div>
     </div>
-
     <div class="modal-footer">
       <button
         type="button"
@@ -478,10 +518,9 @@
       </button>
     </div>
   </ng-template>
-
   <!--  -->
-
   <!-- result div -->
+
   <ng-template #content let-modal form>
     <div class="modal-header" style="background-color: #3f51b5; color: white">
       <p
@@ -491,7 +530,6 @@
       >
         Displaying Record
       </p>
-
       <button
         type="button"
         class="close"
@@ -501,20 +539,17 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-
     <br />
     <mat-progress-bar *ngIf="clientRecordProgress" mode="indeterminate">
     </mat-progress-bar>
     <br />
     <div class="modal-body" id="displayingClientID">
       <!-- starting modal body for all the data -->
-
       <form [formGroup]="registerForm">
         <div class="card">
           <div class="card-header text-white">Client</div>
           <div class="card-body">
             <!-- first row -->
-
             <div class="row">
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="width_" require>
@@ -533,7 +568,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-6">
                 <mat-form-field class="width_">
                   <mat-label>Memo</mat-label>
@@ -546,11 +580,8 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- end of row -->
-
             <!-- second row -->
-
             <div class="row">
               <div class="col-md-4">
                 <mat-form-field appearance="outline" class="width_">
@@ -579,11 +610,9 @@
                   />
                 </mat-form-field>
               </div> -->
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Office File No.</mat-label>
-
                   <input
                     matInput
                     placeholder="Required"
@@ -592,7 +621,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Govt File No. </mat-label>
@@ -604,7 +632,6 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- end of second row -->
           </div>
           <!-- end of card body -->
@@ -614,7 +641,6 @@
         <!--  -->
         <div class="card">
           <div class="card-header">Client General Information</div>
-
           <div class="card-body">
             <div class="row">
               <!-- <div class="col-md-4">
@@ -632,10 +658,8 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-
               </div>
    -->
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>First Name</mat-label>
@@ -647,7 +671,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Middle Name</mat-label>
@@ -658,7 +681,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Last Name</mat-label>
@@ -671,9 +693,7 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- second row -->
-
             <div class="row">
               <!-- <div class="col-md-4">
                 <mat-form-field class="width_">
@@ -686,9 +706,7 @@
                 </mat-form-field>
               </div> -->
             </div>
-
             <!-- third row -->
-
             <div class="row">
               <div class="col-md-4">
                 <mat-form-field class="width_">
@@ -716,7 +734,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Date of Birth</mat-label>
@@ -737,7 +754,6 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- fourth row -->
             <div class="row">
               <div class="col-md-3">
@@ -749,7 +765,6 @@
                     matInput
                     [formControl]="emailFormControl"
                     placeholder="Ex. pat@example.com"
-                    required
                   />
                   <mat-error
                     *ngIf="
@@ -764,11 +779,9 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-
               <div class="col-md-3">
                 <mat-form-field class="width_">
                   <mat-label>Telephone</mat-label>
-
                   <input
                     maxlength="10"
                     type="tel"
@@ -798,7 +811,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-3">
                 <mat-form-field appearance="outline" class="width_">
                   <mat-label>Office</mat-label>
@@ -815,18 +827,14 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- end of fourth row -->
             <!--  -->
             <div class="row"></div>
-
             <!-- fourth row end -->
           </div>
         </div>
         <!-- end second card. -->
-
         <br />
-
         <div class="card">
           <div class="card-header">Permanent Address</div>
           <div class="card-body">
@@ -842,7 +850,6 @@
                   ></textarea>
                 </mat-form-field>
               </div>
-
               <!-- <div class="col-md-4">
               <mat-form-field class="width_">
                 <mat-label>Address #2</mat-label>
@@ -853,7 +860,6 @@
                 ></textarea>
               </mat-form-field>
             </div> -->
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>City</mat-label>
@@ -865,7 +871,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Postal Code</mat-label>
@@ -879,7 +884,6 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- second row -->
             <div class="row">
               <div class="col-md-6">
@@ -898,7 +902,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-6">
                 <!-- <mat-form-field appearance="outline" class="width_">
                   <mat-label>State</mat-label>
@@ -912,7 +915,6 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field> -->
-
                 <mat-form-field class="width_">
                   <mat-label>Enter State</mat-label>
                   <input
@@ -927,14 +929,10 @@
             </div>
           </div>
         </div>
-
         <!-- end 5th card -->
-
         <br />
-
         <!-- -->
         <!-- start mailing -->
-
         <div class="card">
           <div class="card-header">Mailing Address</div>
           <div class="card-body">
@@ -949,7 +947,6 @@
                   ></textarea>
                 </mat-form-field>
               </div>
-
               <!-- <div class="col-md-4">
               <mat-form-field class="width_">
                 <mat-label>Address #2</mat-label>
@@ -961,7 +958,6 @@
                 ></textarea>
               </mat-form-field>
             </div> -->
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>City</mat-label>
@@ -984,7 +980,6 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- second row -->
             <div class="row">
               <div class="col-md-6">
@@ -1002,7 +997,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-6">
                 <!-- <mat-form-field appearance="outline" class="width_">
                   <mat-label>State</mat-label>
@@ -1015,7 +1009,6 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field> -->
-
                 <mat-form-field class="width_">
                   <mat-label>City</mat-label>
                   <input
@@ -1028,13 +1021,9 @@
             </div>
           </div>
         </div>
-
         <!-- end mailing -->
-
         <!-- end contact -->
-
         <br />
-
         <!--  -->
         <div class="card">
           <div class="card-header">Other Info</div>
@@ -1056,7 +1045,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field appearance="outline" class="width_">
                   <mat-label>Education</mat-label>
@@ -1073,7 +1061,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field appearance="outline" class="width_">
                   <mat-label>Marital Status</mat-label>
@@ -1095,9 +1082,7 @@
           </div>
         </div>
         <!-- end  -->
-
         <!-- if married -->
-
         <br />
         <div class="card">
           <div class="card-header">Spouse Details</div>
@@ -1119,7 +1104,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>First Name</mat-label>
@@ -1130,7 +1114,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Middle Name</mat-label>
@@ -1142,7 +1125,6 @@
                 </mat-form-field>
               </div>
             </div>
-
             <!-- second row -->
             <div class="row">
               <div class="col-md-4">
@@ -1155,7 +1137,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Date of Birth</mat-label>
@@ -1174,7 +1155,6 @@
                   <mat-datepicker #spousePicker></mat-datepicker>
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field appearance="outline" class="width_">
                   <mat-label>Education</mat-label>
@@ -1193,7 +1173,6 @@
             </div>
           </div>
         </div>
-
         <br />
         <div class="card">
           <div class="card-header">Sponsor Details</div>
@@ -1209,7 +1188,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-3">
                 <mat-form-field class="width_">
                   <mat-label>Last Name</mat-label>
@@ -1220,7 +1198,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-3">
                 <mat-form-field class="width_">
                   <mat-label>Address</mat-label>
@@ -1231,7 +1208,6 @@
                   ></textarea>
                 </mat-form-field>
               </div>
-
               <div class="col-md-3">
                 <mat-form-field class="width_">
                   <mat-label>Telephone</mat-label>
@@ -1251,7 +1227,6 @@
             </div>
           </div>
         </div>
-
         <br />
         <!-- <div class="card">
           <div class="card-header">Sponsor Spouse's Details</div>
@@ -1267,7 +1242,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Last Name</mat-label>
@@ -1278,7 +1252,6 @@
                   />
                 </mat-form-field>
               </div>
-
               <div class="col-md-4">
                 <mat-form-field class="width_">
                   <mat-label>Address</mat-label>
@@ -1290,8 +1263,6 @@
                 </mat-form-field>
               </div>
             </div>
-
-
             <div class="row">
               <div class="col-md-6">
                 <mat-form-field class="width_">
@@ -1309,7 +1280,6 @@
                   <mat-icon matSuffix>edit</mat-icon>
                 </mat-form-field>
               </div>
-
               <div class="col-md-6">
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Date of Birth</mat-label>
@@ -1330,7 +1300,6 @@
           </div>
         </div> -->
       </form>
-
       <!-- ending modal data for all the data -->
     </div>
     <div class="modal-footer">
@@ -1343,12 +1312,9 @@
       </button>
     </div>
   </ng-template>
-
   <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
     Launch demo modal
   </button> -->
-
   <!-- <hr /> -->
-
   <!-- end -->
 </div>
